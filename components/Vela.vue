@@ -4,18 +4,22 @@
     <p>
       Encendida por: <b>{{ propCandle.iniciales }}</b>
     </p>
-    <p class="countdown">Se apaga en: {{ date.toDateString() }}</p>
+    <p class="countdown">Se apaga en: {{ countdownToDate }}</p>
   </div>
 </template>
 
 <script setup>
 import { countdownTimer } from "~/composables/countdown";
-import { useStore } from "~/stores/db";
 
 const props = defineProps(["propCandle"]);
-const time = Date.now() - props.propCandle.apagar;
-const store = useStore();
+const time = props.propCandle.apagar - Date.now();
 let countdown = ref(time);
+let countdownToDate = ref();
+// countdownToDate = new Date(countdown).toDateString();
+countdownToDate = new Date(12345 * 1000).toISOString().slice(11, -1);  // "03:25:45.000"
+
+const date = Date.now();
+const dateOk = new Date(date).toUTCString();
 
 onMounted(() => {
   countdown = countdownTimer(countdown);

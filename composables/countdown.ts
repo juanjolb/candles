@@ -4,5 +4,7 @@ export const countdownTimer = (countdown) => {
       countdown.value--;
       countdownTimer(countdown);
     }, 1000);
+  } else {
+    return countdown.value = 'Apagada';
   }
 };
