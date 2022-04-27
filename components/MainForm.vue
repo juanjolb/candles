@@ -76,7 +76,6 @@
 
 <script setup>
 import { useStore } from "~/stores/db";
-import dayjs from "dayjs";
 
 //Data
 const candle = reactive({
@@ -85,7 +84,6 @@ const candle = reactive({
   ofrenda: 0,
   ofrendaLibre: 0,
   fecha: "",
-  apagar: "",
   iniciales: "",
 });
 
@@ -106,8 +104,7 @@ const disable = computed(() => {
 
 //Methods
 const handleSubmit = async () => {
-  candle.fecha = dayjs();
-  candle.apagar = dayjs().add(1, 'day');
+  candle.fecha = Date.now();
   const splitted = candle.nombre.split(" ");
   splitted.forEach((inicial) => {
     candle.iniciales =

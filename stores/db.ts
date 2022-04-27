@@ -11,7 +11,6 @@ import {
 
 export const useStore = defineStore("db", {
   state: () => ({
-    countdown: 0,
     candles: [],
   }),
   //ADD CANDLE

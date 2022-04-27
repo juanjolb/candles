@@ -10,13 +10,15 @@
 
 <script setup>
 import { countdownTimer } from "~/composables/countdown";
+import dayjs from "dayjs"
 
 const props = defineProps(["propCandle"]);
-const time = props.propCandle.apagar - Date.now();
-let countdown = ref(time);
+const initTime = dayjs();
+const timeOff = dayjs(props.propCandle.fecha).add(1, 'day').subtract(1, 'hour');
+let countdown = ref('00:00:00');
 
 onMounted(() => {
-  countdown = countdownTimer(countdown);
+  countdown = countdownTimer(initTime, timeOff, countdown);
 });
 </script>
 
@@ -25,6 +27,7 @@ p {
   font-size: 18px;
 }
 .countdown {
-  font-size: 12px;
+  font-style: italic;
+  font-size: 13px;
 }
 </style>
