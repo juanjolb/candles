@@ -121,7 +121,11 @@ const handleSubmit = async () => {
   try {
     candle.fecha = Date.now();
     candle.splitted = candle.nombre.split(" ");
-    candle.splitted.forEach((inicial) => {
+    console.log(candle.splitted);
+    candle.splitted.some((inicial, index) => {
+      if (index >= 4){
+        return true;
+      }
       candle.iniciales += inicial.charAt(0).toUpperCase() + ". ";
     });
     store.addCandle(candle);

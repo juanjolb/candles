@@ -13,8 +13,8 @@ export const useStore = defineStore("db", {
   state: () => ({
     candles: [],
   }),
-  //ADD CANDLE
   actions: {
+   //ADD CANDLE
     async addCandle(candle) {
       try {
         await addDoc(collection(db, "velas"), candle);
@@ -22,7 +22,7 @@ export const useStore = defineStore("db", {
         console.log(e);
       }
     },
-    //GET CANDLE
+    //GET CANDLES INDEX
     async getCandlesIndex() {
       try {
         const q = query(
@@ -30,13 +30,27 @@ export const useStore = defineStore("db", {
           orderBy("fecha", "desc"),
           limit(8)
         );
-        const allCandles = await getDocs(q);
-        allCandles.forEach((doc) => {
+        const candlesIndex = await getDocs(q);
+        candlesIndex.forEach((doc) => {
           this.candles.push(doc);
         });
       } catch (e) {
         console.log(e);
       }
     },
+    async getAllCandles(){
+      try {
+        const first = query(
+          collection(db, "velas"),
+          orderBy("fecha", "desc"),
+          limit(12)
+        )
+        const documentSnapshots = await getDocs(first);
+        const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length-1];
+      }
+      catch {
+
+      }
+    }
   },
 });
