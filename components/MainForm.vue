@@ -85,9 +85,22 @@ const candle = reactive({
   ofrendaLibre: 0,
   fecha: "",
   iniciales: "",
+  splitted: []
 });
 
 //Computed
+const resetCandle = computed(() => {
+    store.$reset();
+    candle.nombre = "",
+    candle.intencion = "",
+    candle.ofrenda = 0,
+    candle.ofrendaLibre = 0,
+    candle.fecha = "",
+    candle.iniciales = ""
+    candle.splitted = []
+});
+
+
 const hide = computed(() => {
   return candle.ofrenda == 5 ? "block" : "none";
 });
@@ -105,14 +118,13 @@ const disable = computed(() => {
 //Methods
 const handleSubmit = async () => {
   candle.fecha = Date.now();
-  const splitted = candle.nombre.split(" ");
-  splitted.forEach((inicial) => {
-    candle.iniciales =
-      candle.iniciales + inicial.charAt(0).toUpperCase() + ". ";
+  candle.splitted = candle.nombre.split(" ");
+  candle.splitted.foreach((inicial) => {
+    candle.iniciales += inicial.charAt(0).toUpperCase() + ". ";
   });
   const store = useStore();
   store.addCandle(candle);
-  store.$reset();
+  resetCandle;
   await store.getCandlesIndex();
 };
 </script>
