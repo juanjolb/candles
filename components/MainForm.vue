@@ -89,18 +89,6 @@ const candle = reactive({
 });
 
 //Computed
-const resetCandle = computed(() => {
-    store.$reset();
-    candle.nombre = "",
-    candle.intencion = "",
-    candle.ofrenda = 0,
-    candle.ofrendaLibre = 0,
-    candle.fecha = "",
-    candle.iniciales = ""
-    candle.splitted = []
-});
-
-
 const hide = computed(() => {
   return candle.ofrenda == 5 ? "block" : "none";
 });
@@ -116,16 +104,35 @@ const disable = computed(() => {
 });
 
 //Methods
+const resetCandle = () => {
+    candle.nombre = ""
+    candle.intencion = ""
+    candle.ofrenda = 0
+    candle.ofrendaLibre = 0
+    candle.fecha = ""
+    candle.iniciales = ""
+    candle.splitted = []
+    return candle;
+}
+
 const handleSubmit = async () => {
-  candle.fecha = Date.now();
-  candle.splitted = candle.nombre.split(" ");
-  candle.splitted.foreach((inicial) => {
-    candle.iniciales += inicial.charAt(0).toUpperCase() + ". ";
-  });
+
   const store = useStore();
-  store.addCandle(candle);
-  resetCandle;
-  await store.getCandlesIndex();
+  try {
+    candle.fecha = Date.now();
+    candle.splitted = candle.nombre.split(" ");
+    candle.splitted.forEach((inicial) => {
+      candle.iniciales += inicial.charAt(0).toUpperCase() + ". ";
+    });
+    store.addCandle(candle);
+    await store.$reset();
+    await resetCandle();
+    await store.getCandlesIndex();
+  }
+  catch (e){
+    console.log(e);
+  }
+
 };
 </script>
 
