@@ -1,6 +1,5 @@
 <template>
   <div>
-    <MostrarVelas />
   </div>
 </template>
 

@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div class="text-center">
     <img src="~/assets/media/candle.gif" alt="candle waving" width="120" />
-    <p>
-      Encendida por: <b>{{ propCandle.iniciales }}</b>
+    <p >
+      Encendida por: <br/>
+      <b>{{ propCandle.iniciales }}</b>
     </p>
     <p class="countdown">Se apaga en: <span :class="{red: countdown.isActive}">{{ countdown.time }}</span></p>
   </div>
@@ -20,7 +21,19 @@ let countdown = reactive({
     isActive: false,
 });
 
+const getFirstTime = () => {
+    const initTime = dayjs();
+    const diffTime = dayjs(timeOff).valueOf() - dayjs(initTime).valueOf();
+    const time = dayjs(timeOff).valueOf() - dayjs(initTime).valueOf();
+    countdown.time = dayjs(time).format('HH:mm:ss');
+    if (diffTime < 0) {
+       countdown.time = 'Apagada';
+       countdown.isActive = true;
+    }
+}
+
 onMounted(() => {
+  getFirstTime();
   countdown = countdownTimer(timeOff, countdown);
 });
 </script>
