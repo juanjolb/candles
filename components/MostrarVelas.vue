@@ -28,7 +28,7 @@
                 >
               </li>
               <p>
-                {{ store.paginacion.pagina + 1 }} de
+                {{ store.paginacion.pagina }} de
                 {{ store.paginacion.totalPaginas }}
               </p>
               <li class="page-item" :class="{ disabled: activeNext }">
@@ -53,7 +53,7 @@ import { useStore } from "~/stores/db.ts";
 const store = useStore();
 
 const activeBack = computed(() => {
-  return store.paginacion.pagina == 0 ? true : false;
+  return store.paginacion.pagina <= 1 ? true : false;
 });
 
 const activeNext = computed(() => {

@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="banner-container">
-      <MainForm />
       <video id="video" data-start="0" autoplay muted loop>
         <source src="../assets/media/candle.mp4" type="video/mp4" />
       </video>

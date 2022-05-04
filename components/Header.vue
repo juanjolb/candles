@@ -2,11 +2,13 @@
   <div>
     <nav class="navbar navbar-expand-lg sticky-top bg-primary">
       <div class="container py-2">
-        <img
-          class="navbar-brand"
-          src="https://catedraldemallorca.org/wp-content/uploads/2021/08/Logotipo_Catedral_negativo.png"
-          width="200"
-        />
+          <NuxtLink to="/">
+          <img
+            class="navbar-brand"
+            src="https://catedraldemallorca.org/wp-content/uploads/2021/08/Logotipo_Catedral_negativo.png"
+            width="200"
+          />
+        </NuxtLink>
         <button
           class="navbar-toggler collapsed"
           type="button"
@@ -24,10 +26,10 @@
             <li class="nav-item pe-lg-3">
               <NuxtLink
                 activeClass="active"
-                to="/"
+                to="encender-vela"
                 class="nav-link"
                 aria-current="page"
-                >Inicio</NuxtLink
+                >Enceder vela</NuxtLink
               >
             </li>
             <li class="nav-item pe-lg-3">

@@ -1,9 +1,8 @@
 <template>
   <div class="container">
-    <div class="row justify-content-end">
+    <div class="d-flex justify-content-center">
       <form
         @submit.prevent="handleSubmit"
-        class="col-xl-3 col-md-3 col-sm-6 col-xs-8"
       >
         <h2 class="text-white text-center mb-4">ENCENDER UNA VELA</h2>
         <div class="form-floating mb-3">
@@ -142,10 +141,6 @@ const handleSubmit = async () => {
 
 <style lang="scss" scoped>
 form {
-  position: absolute;
-  z-index: 50;
-  top: 15%;
-
   .form-floating textarea {
     height: 120px;
   }

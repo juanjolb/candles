@@ -17,8 +17,8 @@ export const useStore = defineStore("db", {
     candles: [],
     totalCandles: 0,
     paginacion: {
-      pagina: 0,
-      totalPaginas: 0,
+      pagina: 1,
+      totalPaginas: 1,
       limit: 8,
       lastVisible: 0,
       firstVisible: 0,
@@ -75,7 +75,7 @@ export const useStore = defineStore("db", {
         candlesData.forEach((doc) => {
           this.candles.push(doc);
         });
-        this.paginacion.pagina = 0;
+        this.paginacion.pagina = 1;
       } catch (e) {
         console.log(e);
       }
