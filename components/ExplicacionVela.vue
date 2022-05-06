@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="container py-5">
-      <div class="row">
+    <div class="container">
+      <div class="row vela py-5">
         <div class="col-md-6">
           <h1 class="mb-5">¿Por qué encender una vela?</h1>
           <p>
@@ -34,4 +34,11 @@
 
 <script setup></script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.row.vela {
+  background-color: #e1e1e1;
+}
+img {
+  max-width: 100%;
+}
+</style>

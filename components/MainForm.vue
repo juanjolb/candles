@@ -1,9 +1,7 @@
 <template>
   <div class="container">
     <div class="d-flex justify-content-center">
-      <form
-        @submit.prevent="handleSubmit"
-      >
+      <form @submit.prevent="handleSubmit">
         <h2 class="text-white text-center mb-4">ENCENDER UNA VELA</h2>
         <div class="form-floating mb-3">
           <input
@@ -30,9 +28,21 @@
           <label for="floatingTextArea" class="form-label"
             >Intención de oración</label
           >
-          <div id="textareaHelp" class="form-text">
+          <!-- <div id="textareaHelp" class="form-text">
             Escriba una intención de oración para reflexionar sobre sus
             intenciones.
+          </div> -->
+          <div class="form-check mt-2">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckChecked"
+              checked
+            />
+            <label class="form-label form-text" for="flexCheckChecked">
+              Hacer pública su intención, será visible para todos.
+            </label>
           </div>
         </div>
         <div class="form-floating mb-3">
@@ -84,7 +94,7 @@ const candle = reactive({
   ofrendaLibre: 0,
   fecha: "",
   iniciales: "",
-  splitted: []
+  splitted: [],
 });
 
 //Computed
@@ -104,25 +114,24 @@ const disable = computed(() => {
 
 //Methods
 const resetCandle = () => {
-    candle.nombre = ""
-    candle.intencion = ""
-    candle.ofrenda = 0
-    candle.ofrendaLibre = 0
-    candle.fecha = ""
-    candle.iniciales = ""
-    candle.splitted = []
-    return candle;
-}
+  candle.nombre = "";
+  candle.intencion = "";
+  candle.ofrenda = 0;
+  candle.ofrendaLibre = 0;
+  candle.fecha = "";
+  candle.iniciales = "";
+  candle.splitted = [];
+  return candle;
+};
 
 const handleSubmit = async () => {
-
   const store = useStore();
   try {
     candle.fecha = Date.now();
     candle.splitted = candle.nombre.split(" ");
     console.log(candle.splitted);
     candle.splitted.some((inicial, index) => {
-      if (index >= 4){
+      if (index >= 4) {
         return true;
       }
       candle.iniciales += inicial.charAt(0).toUpperCase() + ". ";
@@ -131,11 +140,9 @@ const handleSubmit = async () => {
     await store.$reset();
     await resetCandle();
     await store.getCandlesIndex();
-  }
-  catch (e){
+  } catch (e) {
     console.log(e);
   }
-
 };
 </script>
 
@@ -147,6 +154,7 @@ form {
   .form-text {
     color: var(--bs-gray-500);
   }
+
   .btn {
     border: 1px solid white;
     color: white;
