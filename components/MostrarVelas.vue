@@ -1,47 +1,40 @@
 <template>
-  <div>
-    <div class="container-lg mt-5">
-      <div class="row">
-        <div class="col-side col-md-3 text-center pt-3 order-md-2">
-          <p>Total velas encendidas: {{ store.totalCandles }}</p>
-        </div>
-        <div class="col-md-9 order-md-1">
-          <div class="row">
-            <div
-              v-for="candle of store.candles"
-              :key="candle.id"
-              class="col-md-4 col-6"
-            >
-              <Vela :propCandle="candle.data()" />
-            </div>
+  <div class="container-lg mt-5">
+    <div class="row">
+      <div class="col-side col-md-3 text-center pt-3 order-md-2">
+        <p>Total velas encendidas: {{ store.totalCandles }}</p>
+        <p>Velas iluminadas: {{ store.totalLighted }}</p>
+      </div>
+      <div class="col-md-9 order-md-1">
+        <div class="row">
+          <div
+            v-for="candle of store.candles"
+            :key="candle.id"
+            class="col-md-4 col-6"
+          >
+            <Vela :propCandle="candle" />
           </div>
         </div>
-        <div class="order-md-3">
-          <nav aria-label="navigation">
-            <ul class="pagination justify-content-center py-5">
-              <li class="page-item" :class="{ disabled: activeBack }">
-                <a
-                  class="page-link"
-                  href="#"
-                  @click.prevent="store.backCandles()"
-                  >Anterior</a
-                >
-              </li>
-              <p>
-                {{ store.paginacion.pagina }} de
-                {{ store.paginacion.totalPaginas }}
-              </p>
-              <li class="page-item" :class="{ disabled: activeNext }">
-                <a
-                  class="page-link"
-                  href="#"
-                  @click.prevent="store.nextCandles()"
-                  >Siguiente</a
-                >
-              </li>
-            </ul>
-          </nav>
-        </div>
+      </div>
+      <div class="order-md-3">
+        <nav aria-label="navigation">
+          <ul class="pagination justify-content-center py-5">
+            <li class="page-item" :class="{ disabled: activeBack }">
+              <a class="page-link" href="#" @click.prevent="store.backCandles()"
+                >Anterior</a
+              >
+            </li>
+            <p class="px-3 py-2">
+              {{ store.paginacion.pagina }} de
+              {{ store.paginacion.totalPaginas + 1 }}
+            </p>
+            <li class="page-item" :class="{ disabled: activeNext }">
+              <a class="page-link" href="#" @click.prevent="store.nextCandles()"
+                >Siguiente</a
+              >
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   </div>
@@ -64,7 +57,7 @@ const activeNext = computed(() => {
 
 onBeforeMount(async () => {
   store.$reset();
-  await store.obtenerTotalDocumentos();
+  await store.getDataCandles();
   await store.getCandles();
 });
 </script>

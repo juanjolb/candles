@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 import { db } from "~/firebaseConfig";
 import {
   collection,
@@ -10,12 +10,15 @@ import {
   startAfter,
   endBefore,
   limitToLast,
+  updateDoc,
+  doc,
 } from "firebase/firestore";
 
 export const useStore = defineStore("db", {
   state: () => ({
     candles: [],
     totalCandles: 0,
+    totalLighted: 0,
     paginacion: {
       pagina: 1,
       totalPaginas: 1,
@@ -50,16 +53,18 @@ export const useStore = defineStore("db", {
       }
     },
     //GET TOTAL NUMBER OF CANDLES
-    async obtenerTotalDocumentos() {
+    async getDataCandles() {
       const q = query(collection(db, "velas"));
       const candles = await getDocs(q);
-      this.totalCandles = candles.docs.length;
+      this.totalCandles = candles.size;
       this.paginacion.totalPaginas = Math.ceil(
         this.totalCandles / this.paginacion.limit
       );
       this.paginacion.totalPaginas--;
+      candles.forEach((doc) => {
+        if (doc.data().isActive === true) this.totalLighted++;
+      });
     },
-
     //GET CANDLES
     async getCandles() {
       try {
@@ -120,6 +125,16 @@ export const useStore = defineStore("db", {
           this.candles.push(doc);
         });
         this.paginacion.pagina--;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async isNotActive(id) {
+      try {
+        const candle = doc(db, "velas", id);
+        await updateDoc(candle, {
+          isActive: false,
+        });
       } catch (e) {
         console.log(e);
       }

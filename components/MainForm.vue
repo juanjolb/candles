@@ -28,17 +28,13 @@
           <label for="floatingTextArea" class="form-label"
             >Intención de oración</label
           >
-          <!-- <div id="textareaHelp" class="form-text">
-            Escriba una intención de oración para reflexionar sobre sus
-            intenciones.
-          </div> -->
           <div class="form-check mt-2">
             <input
+              v-model="candle.publica"
               class="form-check-input"
               type="checkbox"
-              value=""
+              value="true"
               id="flexCheckChecked"
-              checked
             />
             <label class="form-label form-text" for="flexCheckChecked">
               Hacer pública su intención, será visible para todos.
@@ -90,6 +86,8 @@ import { useStore } from "~/stores/db";
 const candle = reactive({
   nombre: "",
   intencion: "",
+  publica: false,
+  isActive: true,
   ofrenda: 0,
   ofrendaLibre: 0,
   fecha: "",
@@ -116,6 +114,8 @@ const disable = computed(() => {
 const resetCandle = () => {
   candle.nombre = "";
   candle.intencion = "";
+  candle.publica = false;
+  candle.isActive = true;
   candle.ofrenda = 0;
   candle.ofrendaLibre = 0;
   candle.fecha = "";
@@ -129,7 +129,6 @@ const handleSubmit = async () => {
   try {
     candle.fecha = Date.now();
     candle.splitted = candle.nombre.split(" ");
-    console.log(candle.splitted);
     candle.splitted.some((inicial, index) => {
       if (index >= 4) {
         return true;
@@ -139,7 +138,6 @@ const handleSubmit = async () => {
     store.addCandle(candle);
     await store.$reset();
     await resetCandle();
-    await store.getCandlesIndex();
   } catch (e) {
     console.log(e);
   }
@@ -148,6 +146,8 @@ const handleSubmit = async () => {
 
 <style lang="scss" scoped>
 form {
+  width: 600px;
+  padding: 0% 5%;
   .form-floating textarea {
     height: 120px;
   }

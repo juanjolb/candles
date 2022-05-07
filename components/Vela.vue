@@ -1,36 +1,44 @@
 <template>
   <div class="text-center">
     <img src="~/assets/media/candle.gif" alt="candle waving" width="120" />
-    <p >
-      Encendida por: <br/>
-      <b>{{ propCandle.iniciales }}</b>
+    <p>
+      Encendida por: <br />
+      <b>{{ candle.iniciales }}</b>
     </p>
-    <p class="countdown">Se apaga en: <span :class="{red: countdown.isActive}">{{ countdown.time }}</span></p>
+    <p class="countdown">
+      Se apaga en:
+      <span :class="{ red: !isActive }">{{ countdown }}</span>
+    </p>
   </div>
 </template>
 
 <script setup>
 import { countdownTimer } from "~~/composables/countdown";
-import dayjs from "dayjs"
+import { useStore } from "~/stores/db.ts";
+import dayjs from "dayjs";
 
 const props = defineProps(["propCandle"]);
-const timeOff = dayjs(props.propCandle.fecha).add(1, 'day').subtract(1, 'hour');
+const candle = props.propCandle.data();
+const store = useStore();
+const id = props.propCandle.id;
+const timeOff = dayjs(candle.fecha).add(1, "day").subtract(1, "hour");
 
-let countdown = reactive({
-    time: '00:00:00',
-    isActive: false,
-});
+let countdown = ref("00:00:00");
+let isActive = ref(candle.isActive);
 
 const getFirstTime = () => {
-    const initTime = dayjs();
-    const diffTime = dayjs(timeOff).valueOf() - dayjs(initTime).valueOf();
-    const time = dayjs(timeOff).valueOf() - dayjs(initTime).valueOf();
-    countdown.time = dayjs(time).format('HH:mm:ss');
-    if (diffTime < 0) {
-       countdown.time = 'Apagada';
-       countdown.isActive = true;
+  const initTime = dayjs();
+  const diffTime = dayjs(timeOff).valueOf() - dayjs(initTime).valueOf();
+  const time = dayjs(timeOff).valueOf() - dayjs(initTime).valueOf();
+  countdown.value = dayjs(time).format("HH:mm:ss");
+  if (diffTime < 0) {
+    countdown.value = "Apagada";
+    if (candle.isActive === true) {
+      store.isNotActive(id);
+      store.totalLighted--;
     }
-}
+  }
+};
 
 onMounted(() => {
   getFirstTime();
