@@ -12,11 +12,13 @@ import {
   limitToLast,
   updateDoc,
   doc,
+  getDoc,
 } from "firebase/firestore";
 
 export const useStore = defineStore("db", {
   state: () => ({
     candles: [],
+    singleCandle: {},
     totalCandles: 0,
     totalLighted: 0,
     paginacion: {
@@ -135,6 +137,15 @@ export const useStore = defineStore("db", {
         await updateDoc(candle, {
           isActive: false,
         });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async getSingleCandle(id) {
+      try {
+        const data = doc(db, "velas", id);
+        const candle = await getDoc(data);
+        return candle.data();
       } catch (e) {
         console.log(e);
       }
