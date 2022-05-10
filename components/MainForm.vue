@@ -1,81 +1,78 @@
 <template>
-  <div class="container">
-    <div class="d-flex justify-content-center">
-      <form @submit.prevent="handleSubmit">
-        <h2 class="text-white text-center mb-4">ENCENDER UNA VELA</h2>
-        <div class="form-floating mb-3">
-          <input
-            v-model.trim="candle.nombre"
-            type="text"
-            class="form-control"
-            id="floatingInput"
-            aria-describedby="nameHelp"
-            placeholder="Nombre"
-          />
-          <label for="floatingInput" class="form-label">Nombre completo</label>
-          <div id="nameHelp" class="form-text">
-            * Solo se mostrarán las iniciales.
-          </div>
+  <div class="d-flex justify-content-center">
+    <form @submit.prevent="handleSubmit">
+      <div class="form-floating mb-3">
+        <input
+          v-model.trim="candle.nombre"
+          type="text"
+          class="form-control"
+          id="floatingInput"
+          aria-describedby="nameHelp"
+          placeholder="Nombre"
+        />
+        <label for="floatingInput" class="form-label">Nombre completo</label>
+        <div id="nameHelp" class="form-text">
+          * Solo se mostrarán las iniciales.
         </div>
-        <div class="form-floating mb-3">
-          <textarea
-            v-model.trim="candle.intencion"
-            class="form-control"
-            id="floatingTextArea"
-            aria-describedby="textareaHelp"
-            placeholder="Intención de oración"
-          />
-          <label for="floatingTextArea" class="form-label"
-            >Intención de oración</label
-          >
-          <div class="form-check mt-2">
-            <input
-              v-model="candle.publica"
-              class="form-check-input"
-              type="checkbox"
-              value="true"
-              id="flexCheckChecked"
-            />
-            <label class="form-label form-text" for="flexCheckChecked">
-              Hacer pública su intención, será visible para todos.
-            </label>
-          </div>
-        </div>
-        <div class="form-floating mb-3">
-          <select
-            v-model="candle.ofrenda"
-            class="form-select"
-            id="floatingSelect"
-            aria-label="Floating label select example"
-          >
-            <option selectedv value="0">Realizar una ofrenda</option>
-            <option value="1">3€</option>
-            <option value="2">5€</option>
-            <option value="3">7€</option>
-            <option value="4">10€</option>
-            <option value="5">Ofrenda libre</option>
-          </select>
-          <label for="floatingSelect">Ofrenda</label>
-        </div>
-        <div class="form-floating mb-3" :style="{ display: hide }">
-          <input
-            v-model.trim="candle.ofrendaLibre"
-            type="number"
-            class="form-control"
-            id="floatingNumber"
-            placeholder="Cantidad"
-          />
-          <label for="floatingNumber" class="form-label">Cantidad</label>
-        </div>
-        <button
-          :disabled="disable"
-          type="submit"
-          class="btn py-3 mt-2 w-100 bg-primary"
+      </div>
+      <div class="form-floating mb-3">
+        <textarea
+          v-model.trim="candle.intencion"
+          class="form-control"
+          id="floatingTextArea"
+          aria-describedby="textareaHelp"
+          placeholder="Intención de oración"
+        />
+        <label for="floatingTextArea" class="form-label"
+          >Intención de oración</label
         >
-          Encender
-        </button>
-      </form>
-    </div>
+        <div class="form-check mt-2">
+          <input
+            v-model="candle.publica"
+            class="form-check-input"
+            type="checkbox"
+            value="true"
+            id="flexCheckChecked"
+          />
+          <label class="form-label form-text" for="flexCheckChecked">
+            Hacer pública su intención, será visible para todos.
+          </label>
+        </div>
+      </div>
+      <div class="form-floating mb-3">
+        <select
+          v-model="candle.ofrenda"
+          class="form-select"
+          id="floatingSelect"
+          aria-label="Floating label select example"
+        >
+          <option selectedv value="0">Realizar una ofrenda</option>
+          <option value="1">3€</option>
+          <option value="2">5€</option>
+          <option value="3">7€</option>
+          <option value="4">10€</option>
+          <option value="5">Ofrenda libre</option>
+        </select>
+        <label for="floatingSelect">Ofrenda</label>
+      </div>
+      <div class="form-floating mb-3" :style="{ display: hide }">
+        <input
+          v-model.trim="candle.ofrendaLibre"
+          type="number"
+          class="form-control"
+          id="floatingNumber"
+          placeholder="Cantidad"
+        />
+        <label for="floatingNumber" class="form-label">Cantidad</label>
+      </div>
+      <button
+        :disabled="disable"
+        type="submit"
+        class="btn py-3 mt-2 w-100 bg-primary"
+      >
+        Encender
+      </button>
+    </form>
   </div>
 </template>
 

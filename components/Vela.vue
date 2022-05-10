@@ -1,15 +1,17 @@
 <template>
-  <div class="text-center">
-    <img src="~/assets/media/candle.gif" alt="candle waving" width="120" />
-    <p>
-      Encendida por: <br />
-      <b>{{ candle.iniciales }}</b>
-    </p>
-    <p class="countdown">
-      Se apaga en:
-      <span :class="{ red: !isActive }">{{ countdown }}</span>
-    </p>
-  </div>
+  <a :href="link">
+    <div class="text-center">
+      <img src="~/assets/media/candle.gif" alt="candle waving" width="120" />
+      <p>
+        Encendida por: <br />
+        <b>{{ candle.iniciales }}</b>
+      </p>
+      <p class="countdown">
+        Se apaga en:
+        <span :class="{ red: !isActive }">{{ countdown }}</span>
+      </p>
+    </div>
+  </a>
 </template>
 
 <script setup>
@@ -21,6 +23,7 @@ const props = defineProps(["propCandle"]);
 const candle = props.propCandle.data();
 const store = useStore();
 const id = props.propCandle.id;
+const link = "velas/" + id;
 const timeOff = dayjs(candle.fecha).add(1, "day").subtract(1, "hour");
 
 let countdown = ref("00:00:00");
@@ -56,5 +59,9 @@ p {
 }
 .red {
   color: #d3172e;
+}
+a {
+  color: unset;
+  text-decoration: unset;
 }
 </style>
