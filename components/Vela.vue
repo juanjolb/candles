@@ -24,27 +24,13 @@ const candle = props.propCandle.data();
 const store = useStore();
 const id = props.propCandle.id;
 const link = "velas/" + id;
-const timeOff = dayjs(candle.fecha).add(1, "day").subtract(1, "hour");
+const timeOff = dayjs(candle.timeOff);
 
 let countdown = ref("00:00:00");
 let isActive = ref(candle.isActive);
 
-const getFirstTime = () => {
-  const initTime = dayjs();
-  const diffTime = dayjs(timeOff).valueOf() - dayjs(initTime).valueOf();
-  const time = dayjs(timeOff).valueOf() - dayjs(initTime).valueOf();
-  countdown.value = dayjs(time).format("HH:mm:ss");
-  if (diffTime < 0) {
-    countdown.value = "Apagada";
-    if (candle.isActive === true) {
-      store.isNotActive(id);
-      store.totalLighted--;
-    }
-  }
-};
-
 onMounted(() => {
-  getFirstTime();
+  store.getCandleTime(countdown, candle.isActive, id, timeOff);
   countdown = countdownTimer(timeOff, countdown);
 });
 </script>

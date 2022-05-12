@@ -14,6 +14,7 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
+import dayjs from "dayjs";
 
 export const useStore = defineStore("db", {
   state: () => ({
@@ -145,10 +146,37 @@ export const useStore = defineStore("db", {
       try {
         const data = doc(db, "velas", id);
         const candle = await getDoc(data);
-        return candle.data();
+        this.singleCandle = candle.data();
+        // return candle.data()
       } catch (e) {
         console.log(e);
       }
     },
-  },
+    getCandleTime(countdown, isActive, id, timeOff){
+      const initTime = dayjs();
+      const diffTime = dayjs(timeOff).valueOf() - dayjs(initTime).valueOf();
+      const time = dayjs(timeOff).valueOf() - dayjs(initTime).valueOf();
+      countdown.value = dayjs(time).format("HH:mm:ss");
+      if (diffTime < 0) {
+        countdown.value = "Apagada";
+        if (isActive === true) {
+          this.isNotActive(id);
+          this.totalLighted--;
+        }
+      }
+    },
+    async addTime(id, timeOff){
+      try { 
+        const data = doc(db, "velas", id);
+        const newTimeOff = dayjs(timeOff).add(4, "hour").valueOf();
+        await updateDoc(data, {
+          timeOff: newTimeOff,
+          timeUpdated: true
+        });
+      }
+      catch (e) {
+        console.log(e);
+      }
+    },
+}
 });
