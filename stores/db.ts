@@ -25,7 +25,7 @@ export const useStore = defineStore("db", {
     paginacion: {
       pagina: 1,
       totalPaginas: 1,
-      limit: 8,
+      limit: 9,
       lastVisible: 0,
       firstVisible: 0,
     },

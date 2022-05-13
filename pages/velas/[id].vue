@@ -19,16 +19,20 @@
           width="120"
         />
       </div>
-      <h4 class="text-center text-white py-4">
+      <h4 class="text-center text-white py-3">
         Encendida por: {{ candle.iniciales }}
       </h4>
       <blockquote
         v-show="candle.publica"
-        class="blockquote italic text-center text-white"
+        class="blockquote italic text-center text-white py-3"
       >
         <i>"{{ candle.intencion }}"</i>
       </blockquote>
-      <p class="text-center text-white py-3">
+      <p class="text-center text-white">
+        Vela encendida día:
+        {{ dayjs(candle.fecha).format("DD/MM/YYYY") }}
+      </p>
+      <p class="text-center text-white py-1">
         <span v-show="candle.isActive" class="countdown"
           ><i>Tiempo restante: <br />{{ countdown }}</i></span
         >
@@ -37,16 +41,19 @@
         >
       </p>
       <button
-        v-show="isUpdated != true"
+        v-show="!isUpdated"
         :class="{ disabled: !candle.isActive || candle.timeUpdated || blocked }"
         class="btn mx-auto btn-outline-light py-3"
         @click="addTime(interval, timer)"
       >
         MANTENER ENCENDIDA
       </button>
-      <p class="text-white text-center py-3">
+      <p v-show="!isUpdated" class="text-white text-center py-3">
         <i>Info-icon: Mantener encendida durante 4 horas más.</i>
       </p>
+      <h5 v-show="isUpdated" class="text-white text-center py-4">
+        Esta vela se ha mantenido encendida 4 horas más, gracias.
+      </h5>
     </div>
   </div>
 </template>
@@ -66,10 +73,11 @@ const blocked = ref(false);
 const isUpdated = ref(false);
 const interval = ref(null);
 
-const addTime = async (interval, timer) => {
+const addTime = async (interval) => {
   await store.addTime(id, candle.value.timeOff);
+  await store.getSingleCandle(id);
   clearInterval(interval);
-  blocked.value = true;
+  candle.value = store.singleCandle;
   isUpdated.value = store.singleCandle.timeUpdated;
 };
 
@@ -79,8 +87,8 @@ const timer = (timeOff) => {
   const time = dayjs(timeOff).valueOf() - dayjs(initTime).valueOf();
   const dia = dayjs.duration(time).days();
   dia > 0
-    ? (countdown.value = dia + " día " + dayjs(time).format("HH:mm:ss"))
-    : (countdown.value = dayjs(time).format("HH:mm:ss"));
+    ? (countdown.value = dia + " día " + dayjs(time).format("HH:mm:ss [hrs.]"))
+    : (countdown.value = dayjs(time).format("HH:mm:ss [hrs.]"));
   if (diffTime < 0) {
     countdown.value = "Apagada";
     clearInterval(interval);
@@ -106,6 +114,7 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .background-candle {
   background-image: url("~/assets/media/bg-candle-lighted.webp");
+  min-height: 80vh;
 }
 hr {
   width: 200px;

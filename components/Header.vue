@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navbar-expand-lg sticky-top bg-primary">
       <div class="container py-2">
-          <NuxtLink to="/">
+        <NuxtLink to="/">
           <img
             class="navbar-brand"
             src="https://catedraldemallorca.org/wp-content/uploads/2021/08/Logotipo_Catedral_negativo.png"
@@ -26,7 +26,7 @@
             <li class="nav-item pe-lg-3">
               <NuxtLink
                 activeClass="active"
-                to="encender-vela"
+                to="/encender-vela"
                 class="nav-link"
                 aria-current="page"
                 >Enceder vela</NuxtLink

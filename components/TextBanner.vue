@@ -7,13 +7,13 @@
       blanditiis inventore repellendus culpa ut earum animi corporis laborum!
       Suscipit.
     </p>
-    <p>
+    <p class="mb-5">
       Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda neque
       magni odit deserunt hic suscipit.
     </p>
-    <button type="button" class="btn btn-outline-light d-block m-auto mt-5">
+    <NuxtLink to="/encender-vela" class="btn btn-outline-light d-block py-3">
       ENCENDER VELA
-    </button>
+    </NuxtLink>
   </div>
 </template>
 

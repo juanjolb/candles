@@ -7,7 +7,7 @@
         <b>{{ candle.iniciales }}</b>
       </p>
       <p class="countdown">
-        Se apaga en:
+        <span class="d-block pb-2">Se apaga en: <br /></span>
         <span :class="{ red: !isActive }">{{ countdown }}</span>
       </p>
     </div>

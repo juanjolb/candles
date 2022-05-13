@@ -50,7 +50,7 @@ const activeBack = computed(() => {
 });
 
 const activeNext = computed(() => {
-  return store.paginacion.pagina >= store.paginacion.totalPaginas
+  return store.paginacion.pagina >= store.paginacion.totalPaginas + 1
     ? true
     : false;
 });
