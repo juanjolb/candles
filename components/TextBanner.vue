@@ -12,10 +12,14 @@
       magni odit deserunt hic suscipit.
     </p>
     <NuxtLink to="/encender-vela" class="btn btn-outline-light d-block py-3">
-      ENCENDER VELA
+      ENCENDER VELA <MdiCandle style="font-size: 18px; margin-top: -3px" />
     </NuxtLink>
   </div>
 </template>
+
+<script setup>
+import MdiCandle from "~icons/mdi/candle";
+</script>
 
 <style scoped>
 h1,

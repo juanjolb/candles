@@ -7,14 +7,14 @@
         <img
           v-show="candle.isActive"
           class=""
-          src="~/assets/media/candle.gif"
+          src="~/assets/media/candle.webp"
           alt="candle waving"
           width="120"
         />
         <img
           v-show="!candle.isActive"
           class=""
-          src="~/assets/media/candle.gif"
+          src="~/assets/media/candle4.gif"
           alt="candle waving"
           width="120"
         />
@@ -32,7 +32,7 @@
         Vela encendida día:
         {{ dayjs(candle.fecha).format("DD/MM/YYYY") }}
       </p>
-      <p class="text-center text-white py-1">
+      <p class="text-center text-white py-2">
         <span v-show="candle.isActive" class="countdown"
           ><i>Tiempo restante: <br />{{ countdown }}</i></span
         >
@@ -52,7 +52,7 @@
         <i>Info-icon: Mantener encendida durante 4 horas más.</i>
       </p>
       <h5 v-show="isUpdated" class="text-white text-center py-4">
-        Esta vela se ha mantenido encendida 4 horas más, gracias.
+        Esta vela se mantendrá encendida 4 horas más, gracias.
       </h5>
     </div>
   </div>

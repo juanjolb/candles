@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-dark">
+  <div class="background">
     <div class="py-5 container">
       <blockquote class="blockquote text-white text-center pb-4 mx-auto">
         "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure debitis
@@ -15,5 +15,9 @@
 <style lang="scss" scoped>
 blockquote {
   max-width: 800px;
+}
+.background {
+  background-image: url("~~/assets/media/bg-candle-lighted.webp");
+  min-height: 80vh;
 }
 </style>

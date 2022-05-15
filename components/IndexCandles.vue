@@ -2,7 +2,11 @@
   <div class="container text-center pt-5">
     <h2 class="mb-5">ÚLTIMAS VELAS</h2>
     <div class="row">
-      <div v-for="candle of store.candles" :key="candle.id" class="col-md-3">
+      <div
+        v-for="candle of store.candles"
+        :key="candle.id"
+        class="col-md-3 mb-5"
+      >
         <Vela :propCandle="candle"></Vela>
       </div>
     </div>

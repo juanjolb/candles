@@ -1,7 +1,7 @@
 <template>
   <div class="container-lg mt-5">
     <div class="row">
-      <div class="col-side col-md-3 text-center pt-3 order-md-2">
+      <div class="col-side col-md-3 my-3 pt-3 text-center order-md-2">
         <p>Total velas encendidas: {{ store.totalCandles }}</p>
         <p>Velas iluminadas: {{ store.totalLighted }}</p>
       </div>
@@ -10,7 +10,7 @@
           <div
             v-for="candle of store.candles"
             :key="candle.id"
-            class="col-md-4 col-6"
+            class="col-md-4 col-6 pb-5"
           >
             <Vela :propCandle="candle" />
           </div>
@@ -18,7 +18,7 @@
       </div>
       <div class="order-md-3">
         <nav aria-label="navigation">
-          <ul class="pagination justify-content-center py-5">
+          <ul class="pagination justify-content-center pb-5">
             <li class="page-item" :class="{ disabled: activeBack }">
               <a class="page-link" href="#" @click.prevent="store.backCandles()"
                 >Anterior</a

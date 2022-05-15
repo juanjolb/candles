@@ -1,7 +1,15 @@
 import { defineNuxtConfig } from "nuxt3";
+import Icons from "unplugin-icons/vite";
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
+  vite: {
+    plugins: [
+      Icons({
+        autoInstall: true,
+      }),
+    ],
+  },
   css: ["~/assets/styles/main.scss"],
   script: [
     {

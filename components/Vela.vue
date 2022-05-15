@@ -1,7 +1,12 @@
 <template>
   <a :href="link">
     <div class="text-center">
-      <img src="~/assets/media/candle.gif" alt="candle waving" width="120" />
+      <img
+        src="~/assets/media/candle.gif"
+        alt="candle waving"
+        width="120"
+        class="mb-3 rounded-circle"
+      />
       <p>
         Encendida por: <br />
         <b>{{ candle.iniciales }}</b>
@@ -41,7 +46,7 @@ p {
 }
 .countdown {
   font-style: italic;
-  font-size: 13px;
+  font-size: 14px;
 }
 .red {
   color: #d3172e;

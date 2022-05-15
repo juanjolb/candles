@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import { db } from "~/firebaseConfig";
 import {
   collection,
-  addDoc,
   getDocs,
   query,
   orderBy,
@@ -13,6 +12,7 @@ import {
   updateDoc,
   doc,
   getDoc,
+  setDoc,
 } from "firebase/firestore";
 import dayjs from "dayjs";
 
@@ -32,9 +32,9 @@ export const useStore = defineStore("db", {
   }),
   actions: {
     //ADD CANDLE
-    async addCandle(candle) {
+    async addCandle(candle, id) {
       try {
-        await addDoc(collection(db, "velas"), candle);
+        await setDoc(doc(db, "velas", id), candle);
       } catch (e) {
         console.log(e);
       }
@@ -152,7 +152,7 @@ export const useStore = defineStore("db", {
         console.log(e);
       }
     },
-    getCandleTime(countdown, isActive, id, timeOff){
+    getCandleTime(countdown, isActive, id, timeOff) {
       const initTime = dayjs();
       const diffTime = dayjs(timeOff).valueOf() - dayjs(initTime).valueOf();
       const time = dayjs(timeOff).valueOf() - dayjs(initTime).valueOf();
@@ -165,18 +165,17 @@ export const useStore = defineStore("db", {
         }
       }
     },
-    async addTime(id, timeOff){
-      try { 
+    async addTime(id, timeOff) {
+      try {
         const data = doc(db, "velas", id);
         const newTimeOff = dayjs(timeOff).add(4, "hour").valueOf();
         await updateDoc(data, {
           timeOff: newTimeOff,
-          timeUpdated: true
+          timeUpdated: true,
         });
-      }
-      catch (e) {
+      } catch (e) {
         console.log(e);
       }
     },
-}
+  },
 });

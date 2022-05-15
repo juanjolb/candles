@@ -1,12 +1,12 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-lg sticky-top bg-primary">
-      <div class="container py-2">
+      <div class="container">
         <NuxtLink to="/">
           <img
             class="navbar-brand"
             src="https://catedraldemallorca.org/wp-content/uploads/2021/08/Logotipo_Catedral_negativo.png"
-            width="200"
+            width="150"
           />
         </NuxtLink>
         <button
@@ -53,12 +53,17 @@
           </ul>
           <button type="button" class="btn btn-outline-light">
             Página principal
+            <MdiWeb style="margin-top: -3px" />
           </button>
         </div>
       </div>
     </nav>
   </div>
 </template>
+
+<script setup>
+import MdiWeb from "~icons/mdi/web";
+</script>
 
 <style lang="scss" scoped>
 nav {

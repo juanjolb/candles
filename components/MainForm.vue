@@ -79,6 +79,7 @@
 <script setup>
 import { useStore } from "~/stores/db";
 import dayjs from "dayjs";
+import { nanoid } from "nanoid";
 
 //Data
 const candle = reactive({
@@ -94,6 +95,8 @@ const candle = reactive({
   timeOff: "",
   timeUpdated: false,
 });
+const router = useRouter();
+const id = nanoid();
 
 //Computed
 const hide = computed(() => {
@@ -110,21 +113,21 @@ const disable = computed(() => {
   return true;
 });
 
-//Methods
-const resetCandle = () => {
-  candle.nombre = "";
-  candle.intencion = "";
-  candle.publica = false;
-  candle.isActive = true;
-  candle.ofrenda = 0;
-  candle.ofrendaLibre = 0;
-  candle.fecha = "";
-  candle.iniciales = "";
-  candle.splitted = [];
-  candle.timeOff = "";
-  candle.timeUpdated = false;
-  return candle;
-};
+// //Methods
+// const resetCandle = () => {
+//   candle.nombre = "";
+//   candle.intencion = "";
+//   candle.publica = false;
+//   candle.isActive = true;
+//   candle.ofrenda = 0;
+//   candle.ofrendaLibre = 0;
+//   candle.fecha = "";
+//   candle.iniciales = "";
+//   candle.splitted = [];
+//   candle.timeOff = "";
+//   candle.timeUpdated = false;
+//   return candle;
+// };
 
 const handleSubmit = async () => {
   const store = useStore();
@@ -141,9 +144,12 @@ const handleSubmit = async () => {
       }
       candle.iniciales += inicial.charAt(0).toUpperCase() + ". ";
     });
-    store.addCandle(candle);
+    store.addCandle(candle, id);
     await store.$reset();
-    await resetCandle();
+    // await resetCandle();
+    navigateTo({
+      path: "/velas/" + id,
+    });
   } catch (e) {
     console.log(e);
   }
