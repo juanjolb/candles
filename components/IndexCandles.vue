@@ -5,13 +5,13 @@
       <div
         v-for="candle of store.candles"
         :key="candle.id"
-        class="col-md-3 mb-5"
+        class="col-6 col-md-3 mb-5"
       >
         <Vela :propCandle="candle"></Vela>
       </div>
     </div>
   </div>
-  <div class="container text-center my-5">
+  <div class="container text-center mb-5">
     <NuxtLink to="/velas" class="btn btn-outline-dark p-3"
       >VER TODAS LAS VELAS</NuxtLink
     >

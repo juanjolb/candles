@@ -1,5 +1,5 @@
 <template>
-  <div class="container-lg mt-5">
+  <div class="container-lg pt-5">
     <div class="row">
       <div class="col-side col-md-3 my-3 pt-3 text-center order-md-2">
         <p>Total velas encendidas: {{ store.totalCandles }}</p>

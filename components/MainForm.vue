@@ -70,7 +70,7 @@
         type="submit"
         class="btn py-3 mt-2 w-100 bg-primary"
       >
-        Encender
+        Encender <MdiCandle style="font-size: 18px; margin-top: -3px" />
       </button>
     </form>
   </div>
@@ -80,6 +80,7 @@
 import { useStore } from "~/stores/db";
 import dayjs from "dayjs";
 import { nanoid } from "nanoid";
+import MdiCandle from "~icons/mdi/candle";
 
 //Data
 const candle = reactive({

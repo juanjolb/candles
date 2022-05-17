@@ -1,15 +1,13 @@
 <template>
   <div>
-    <div
-      class="main-banner container-fluid p-0 d-flex justify-content-center align-items-center"
-    >
-      <video id="video" class="w-100" data-start="0" autoplay muted loop>
-        <source src="../assets/media/candle.mp4" type="video/mp4" />
+    <div class="container-fluid main-banner">
+      <video id="video" data-start="0" autoplay muted loop>
+        <source src="../assets/media/vid-candle-cdm2.mp4" type="video/mp4" />
       </video>
       <TextBanner />
     </div>
 
-    <div class="body-container p-4">
+    <div>
       <IndexCandles />
       <ExplicacionVela />
       <ExplicacionDonaciones />
@@ -19,13 +17,12 @@
 
 <style lang="scss" scoped>
 video {
-  height: 600px;
-  transform: translate(-25%);
+  width: 100%;
+  height: 800px;
+  object-fit: cover;
 }
-.main-banner {
-  background-color: #040900;
-}
-.body-container {
-  background-color: #e8e8e8;
+.container-fluid {
+  padding: 0;
+  position: relative;
 }
 </style>

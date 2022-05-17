@@ -3,7 +3,17 @@
     <div class="container py-5">
       <h1 class="text-center text-white">Gracias por encender una vela</h1>
       <hr />
-      <div class="bg-white d-block mx-auto img-candle">
+
+      <h4 class="text-center text-white py-3">
+        Encendida por: {{ candle.iniciales }}
+      </h4>
+      <blockquote
+        v-show="candle.publica"
+        class="blockquote italic text-center text-white py-3"
+      >
+        <i>{{ candle.intencion }}</i>
+      </blockquote>
+      <div class="d-block mx-auto img-candle pb-3">
         <img
           v-show="candle.isActive"
           class=""
@@ -19,15 +29,6 @@
           width="120"
         />
       </div>
-      <h4 class="text-center text-white py-3">
-        Encendida por: {{ candle.iniciales }}
-      </h4>
-      <blockquote
-        v-show="candle.publica"
-        class="blockquote italic text-center text-white py-3"
-      >
-        <i>"{{ candle.intencion }}"</i>
-      </blockquote>
       <p class="text-center text-white">
         Vela encendida día:
         {{ dayjs(candle.fecha).format("DD/MM/YYYY") }}
@@ -37,7 +38,11 @@
           ><i>Tiempo restante: <br />{{ countdown }}</i></span
         >
         <span v-show="!candle.isActive" class="countdown px-5"
-          ><i>{{ countdown }}</i></span
+          ><i
+            >{{ countdown }}
+            <br />
+            {{ timeOff }}
+          </i></span
         >
       </p>
       <button
@@ -47,9 +52,13 @@
         @click="addTime(interval, timer)"
       >
         MANTENER ENCENDIDA
+        <MdiClockTimeTwoOutline style="font-size: 14px; margin-top: -3px" />
       </button>
       <p v-show="!isUpdated" class="text-white text-center py-3">
-        <i>Info-icon: Mantener encendida durante 4 horas más.</i>
+        <i
+          ><MdiInformationOutline style="font-size: 14px; margin-top: -3px" />
+          Se mantendrá encendida durante 4 horas más.</i
+        >
       </p>
       <h5 v-show="isUpdated" class="text-white text-center py-4">
         Esta vela se mantendrá encendida 4 horas más, gracias.
@@ -62,6 +71,8 @@
 import { useStore } from "~/stores/db";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
+import MdiClockTimeTwoOutline from "~icons/mdi/clock-time-two-outline";
+import MdiInformationOutline from "~icons/mdi/information-outline";
 dayjs.extend(duration);
 
 const store = useStore();
@@ -72,6 +83,7 @@ const countdown = ref("00:00:00");
 const blocked = ref(false);
 const isUpdated = ref(false);
 const interval = ref(null);
+const timeOff = ref(null);
 
 const addTime = async (interval) => {
   await store.addTime(id, candle.value.timeOff);
@@ -99,6 +111,7 @@ onMounted(async () => {
   await store.getSingleCandle(id);
   candle.value = store.singleCandle;
   isUpdated.value = candle.value.timeUpdated;
+  timeOff.value = dayjs(candle.value.timeOff).format("DD/MM/YYYY HH:mm");
   store.getCandleTime(
     countdown,
     candle.value.isActive,
@@ -134,6 +147,7 @@ hr {
   border-radius: 20px;
 }
 .btn {
+  font-size: 14px;
   display: block;
 }
 </style>

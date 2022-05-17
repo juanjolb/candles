@@ -1,5 +1,5 @@
 <template>
-  <div class="container position-absolute w-25">
+  <div class="video-text position-absolute">
     <h1 class="mb-4 text-center">Enciende una vela</h1>
     <p>
       Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda neque
@@ -22,6 +22,13 @@ import MdiCandle from "~icons/mdi/candle";
 </script>
 
 <style scoped>
+.video-text {
+  top: 25%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  max-width: 620px;
+}
 h1,
 p {
   color: white;
@@ -32,8 +39,5 @@ p {
 }
 button {
   font-size: 17px;
-}
-.container {
-  right: 30%;
 }
 </style>

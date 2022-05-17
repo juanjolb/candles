@@ -1,6 +1,6 @@
 <template>
-  <div class="container justify-content-center bg-gray">
-    <div class="row my-5 p-5">
+  <div class="container justify-content-center my-5 bg-gray">
+    <div class="row p-5">
       <div class="col-md-6">
         <h1 class="mb-5">¿Por qué encender una vela?</h1>
         <p>
