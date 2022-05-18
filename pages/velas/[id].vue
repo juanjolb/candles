@@ -16,15 +16,13 @@
       <div class="d-block mx-auto img-candle pb-3">
         <img
           v-show="candle.isActive"
-          class=""
-          src="~/assets/media/candle.webp"
+          src="~/assets/media/candle.gif"
           alt="candle waving"
           width="120"
         />
         <img
           v-show="!candle.isActive"
-          class=""
-          src="~/assets/media/candle4.gif"
+          src="~/assets/media/candle-blow-out.gif"
           alt="candle waving"
           width="120"
         />
@@ -57,7 +55,7 @@
       <p v-show="!isUpdated" class="text-white text-center py-3">
         <i
           ><MdiInformationOutline style="font-size: 14px; margin-top: -3px" />
-          Se mantendrá encendida durante 4 horas más.</i
+          Gracias por mantener encendida durante 4 horas más.</i
         >
       </p>
       <h5 v-show="isUpdated" class="text-white text-center py-4">

@@ -2,7 +2,15 @@
   <a :href="link">
     <div class="text-center">
       <img
+        v-show="isActive"
         src="~/assets/media/candle.gif"
+        alt="candle waving"
+        width="120"
+        class="mb-3 rounded-circle"
+      />
+      <img
+        v-show="!isActive"
+        src="~/assets/media/candle-blow-out.gif"
         alt="candle waving"
         width="120"
         class="mb-3 rounded-circle"
