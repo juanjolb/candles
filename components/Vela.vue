@@ -10,7 +10,7 @@
       />
       <img
         v-show="!isActive"
-        src="~/assets/media/candle-blow-out.gif"
+        src="~/assets/media/candle-blow-out-loopless.gif"
         alt="candle waving"
         width="120"
         class="mb-3 rounded-circle"

@@ -1,23 +1,17 @@
 <template>
-  <div class="background">
-    <div class="py-5 container">
-      <blockquote class="blockquote text-white text-center pb-4 mx-auto">
-        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure debitis
-        numquam autem dolorem quas exercitationem ab, harum facilis aperiam quia
-        explicabo aspernatur suscipit adipisci quod nisi totam tempora odio
-        nihil!"
-      </blockquote>
-      <MainForm />
-    </div>
+  <div>
+    <video id="video" data-start="0" autoplay muted loop>
+      <source src="../assets/media/vid-candle-cdm.mp4" type="video/mp4" />
+    </video>
+    <MainForm />
   </div>
 </template>
 
 <style lang="scss" scoped>
-blockquote {
-  max-width: 800px;
-}
-.background {
-  background-image: url("~~/assets/media/bg-candle-lighted.webp");
-  min-height: 80vh;
+video {
+  width: 100%;
+  height: 80vh;
+  object-fit: cover;
+  margin-bottom: -6px;
 }
 </style>

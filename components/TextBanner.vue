@@ -23,7 +23,7 @@ import MdiCandle from "~icons/mdi/candle";
 
 <style scoped>
 .video-text {
-  top: 25%;
+  top: 20%;
   left: 0;
   right: 0;
   margin: auto;

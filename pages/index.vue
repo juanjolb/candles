@@ -18,7 +18,7 @@
 <style lang="scss" scoped>
 video {
   width: 100%;
-  height: 800px;
+  height: 620px;
   object-fit: cover;
 }
 .container-fluid {

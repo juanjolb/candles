@@ -1,5 +1,11 @@
 <template>
-  <div class="d-flex justify-content-center">
+  <div class="form-container position-absolute">
+    <blockquote class="blockquote text-white text-center pb-4 mx-auto">
+      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure debitis
+      numquam autem dolorem quas exercitationem ab, harum facilis aperiam quia
+      explicabo aspernatur suscipit adipisci quod nisi totam tempora odio
+      nihil!"
+    </blockquote>
     <form @submit.prevent="handleSubmit">
       <div class="form-floating mb-3">
         <input
@@ -176,5 +182,12 @@ form {
   .btn:hover {
     background-color: slategray;
   }
+}
+.form-container {
+  top: 15%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  max-width: 620px;
 }
 </style>

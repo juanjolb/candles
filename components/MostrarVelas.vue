@@ -1,9 +1,25 @@
 <template>
   <div class="container-lg pt-5">
     <div class="row">
-      <div class="col-side col-md-3 my-3 pt-3 text-center order-md-2">
-        <p>Total velas encendidas: {{ store.totalCandles }}</p>
-        <p>Velas iluminadas: {{ store.totalLighted }}</p>
+      <div class="col-side col-md-3 mb-5 text-center order-md-2">
+        <div class="info-container p-3">
+          <p class="text-white text-center"><b>ESTADÍSTICAS</b></p>
+          <div class="d-block py-2 my-4 block total-lit">
+            Total velas encendidas: {{ store.totalCandles }}
+          </div>
+          <div class="d-block py-2 my-4 block current-lit">
+            Velas iluminadas: {{ store.totalLighted }}
+          </div>
+          <p class="mb-0">
+            <NuxtLink
+              to="/encender-vela/"
+              class="text-white"
+              style="text-decoration: none"
+              ><b>ENCENDER VELA <MdiCandle style="margin-top: -5px" /> </b>
+              <hr
+            /></NuxtLink>
+          </p>
+        </div>
       </div>
       <div class="col-md-9 order-md-1">
         <div class="row">
@@ -42,6 +58,7 @@
 
 <script setup>
 import { useStore } from "~/stores/db.ts";
+import MdiCandle from "~icons/mdi/candle";
 
 const store = useStore();
 
@@ -63,7 +80,33 @@ onBeforeMount(async () => {
 </script>
 
 <style lang="scss" scoped>
-.col-side {
-  background-color: #f8f8f8;
+.container-lg {
+  min-height: 80vh;
+}
+hr {
+  color: white;
+  opacity: 1;
+  width: 180px;
+  height: 2px;
+  margin: 5px auto 0px auto;
+}
+.block {
+  color: black;
+  text-transform: uppercase;
+  font-weight: bold;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.56);
+  font-size: 14px;
+}
+.block.total-lit {
+  background-color: white;
+}
+.block.current-lit {
+  background-color: #0b0b0b85;
+  color: white !important;
+}
+.info-container {
+  border-radius: 5px;
+
+  background-color: #d3172e;
 }
 </style>

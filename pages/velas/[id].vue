@@ -16,7 +16,7 @@
       <div class="d-block mx-auto img-candle pb-3">
         <img
           v-show="candle.isActive"
-          src="~/assets/media/candle.gif"
+          src="~/assets/media/single-candle.gif"
           alt="candle waving"
           width="120"
         />
@@ -55,7 +55,7 @@
       <p v-show="!isUpdated" class="text-white text-center py-3">
         <i
           ><MdiInformationOutline style="font-size: 14px; margin-top: -3px" />
-          Gracias por mantener encendida durante 4 horas más.</i
+          Mantener encendida por 4 horas más.</i
         >
       </p>
       <h5 v-show="isUpdated" class="text-white text-center py-4">
@@ -124,7 +124,9 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .background-candle {
-  background-image: url("~/assets/media/bg-candle-lighted.webp");
+  background-color: black;
+  background-image: url("~/assets/media/bg-candle-lighted.jpg");
+  background-repeat: no-repeat;
   min-height: 80vh;
 }
 hr {
