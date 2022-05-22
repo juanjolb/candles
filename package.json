@@ -6,6 +6,7 @@
     "start": "node .output/server/index.mjs"
   },
   "devDependencies": {
+    "@iconify-json/bxs": "^1.1.2",
     "@iconify-json/cil": "^1.1.1",
     "@iconify-json/fa": "^1.1.1",
     "@iconify-json/ic": "^1.1.4",

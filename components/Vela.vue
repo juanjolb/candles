@@ -44,6 +44,7 @@ let isActive = ref(candle.isActive);
 
 onMounted(() => {
   store.getCandleTime(countdown, candle.isActive, id, timeOff);
+  isActive = candle.isActive;
   countdown = countdownTimer(timeOff, countdown);
 });
 </script>

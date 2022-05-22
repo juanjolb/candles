@@ -59,7 +59,7 @@
         >
       </p>
       <h5 v-show="isUpdated" class="text-white text-center py-4">
-        Esta vela se mantendrá encendida 4 horas más, gracias.
+        Esta vela se mantuvo encendida 4 horas más, gracias.
       </h5>
     </div>
   </div>

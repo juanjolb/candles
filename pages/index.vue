@@ -6,11 +6,8 @@
       </video>
       <TextBanner />
     </div>
-
     <div>
       <IndexCandles />
-      <ExplicacionVela />
-      <ExplicacionDonaciones />
     </div>
   </div>
 </template>
