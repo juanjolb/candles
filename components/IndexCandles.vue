@@ -1,6 +1,8 @@
 <template>
-  <div class="container text-center pt-5">
-    <h2 class="mb-5">ÚLTIMAS VELAS</h2>
+  <div class="container pt-5">
+    <h3 class="pb-5 text-center">
+      ÚLTIMAS VELAS <MdiCandle style="margin-top: -10px" />
+    </h3>
     <div class="row">
       <div
         v-for="candle of store.candles"
@@ -11,7 +13,7 @@
       </div>
     </div>
   </div>
-  <div class="container text-center mb-5">
+  <div class="container text-center">
     <NuxtLink to="/velas" class="btn btn-outline-dark p-3"
       >VER TODAS LAS VELAS</NuxtLink
     >
@@ -20,6 +22,7 @@
 
 <script setup>
 import { useStore } from "~/stores/db";
+import MdiCandle from "~icons/mdi/candle";
 
 const store = useStore();
 

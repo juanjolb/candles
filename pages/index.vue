@@ -9,6 +9,9 @@
     <div>
       <IndexCandles />
     </div>
+    <div>
+      <IndexDonationTxt />
+    </div>
   </div>
 </template>
 
