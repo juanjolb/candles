@@ -8,6 +8,20 @@
   </div>
 </template>
 
+<script>
+export default {
+  head() {
+    return {
+      script: [
+        {
+          src: "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+        },
+      ],
+    };
+  },
+};
+</script>
+
 <style lang="scss">
 .body-container {
   background-color: #e8e8e8;

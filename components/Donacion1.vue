@@ -13,7 +13,50 @@
             </p>
           </div>
         </div>
-        <div class="objective py-4">
+        <div class="accordion my-3" id="accordionFlushExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseOne"
+                aria-expanded="false"
+                aria-controls="flush-collapseOne"
+              >
+                Más información del proyecto
+              </button>
+            </h2>
+            <div
+              id="flush-collapseOne"
+              class="accordion-collapse collapse"
+              aria-labelledby="flush-headingOne"
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div class="accordion-body">
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Fugiat est deleniti soluta praesentium nihil expedita velit
+                  vitae culpa! Quisquam amet ex nulla tenetur voluptates, fugit
+                  incidunt assumenda praesentium quas repellendus.
+                </p>
+                <p>
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea,
+                  rem? Dolorem repudiandae nemo minus repellendus fugit error
+                  eius dicta, quo quos neque vel assumenda corrupti animi
+                  voluptas doloremque. Omnis, ex!
+                </p>
+                <p>
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea,
+                  rem? Dolorem repudiandae nemo minus repellendus fugit error
+                  eius dicta, quo quos neque vel assumenda corrupti animi
+                  voluptas doloremque. Omnis, ex!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="objective mb-3">
           <div class="row text-center">
             <div class="col-6 border-end border-primary">
               <p><b>Actual: 532 €</b></p>

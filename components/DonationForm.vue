@@ -1,7 +1,7 @@
 <template>
   <div class="text-center">
     <h3 class="text-primary"><b>Colaborar</b></h3>
-    <p class="py-3">Donar para ayudar a realizar el proyecto</p>
+    <p class="py-2">Donar para ayudar a realizar el proyecto</p>
   </div>
   <form>
     <div
@@ -72,14 +72,60 @@
         <span class="input-group-text">€</span>
       </div>
     </div>
+    <div class="form-group px-3 mb-3">
+      <input
+        type="email"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        placeholder="Nombre"
+      />
+    </div>
+    <div class="form-group px-3 mb-3">
+      <input
+        type="email"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        placeholder="Apellidos"
+      />
+    </div>
+    <div class="form-group px-3 mb-3">
+      <input
+        type="email"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        placeholder="Email"
+      />
+    </div>
+    <div class="form-check mx-3 mb-3">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        value=""
+        id="defaultCheck1"
+      />
+      <label class="form-check-label" for="defaultCheck1">
+        He leído y acepto la <a href="#">política de privacidad</a>
+      </label>
+    </div>
     <button type="submit" class="btn btn-primary mx-auto d-block px-5">
       Realizar donación <BxsDonateHeart style="margin-top: -5px" />
     </button>
   </form>
+  <p class="fiscal-info">
+    <IcOutlineInfo style="font-size: 16px; margin-top: -3px" />
+    Si deseas recibir un certificado de tu donación para desgravación fiscal,
+    por favor envíanos la referencia de la donación y tus datos fiscales
+    (Nombre, Apellidos, NIF, Domicilio, Email) a
+    contabilidad@catedraldesantiago.es
+  </p>
 </template>
 
 <script setup>
 import BxsDonateHeart from "~icons/bxs/donate-heart";
+import IcOutlineInfo from "~icons/ic/outline-info";
 const quantity = ref(5);
 const quantityChosen = ref(0);
 
@@ -100,5 +146,12 @@ const chooseDonation = computed(() => {
   background-color: #d3172e;
   font-weight: bold;
   color: white;
+}
+.form-group .form-control {
+  padding: 12px;
+}
+.fiscal-info {
+  padding: 20px 10px 0px 10px;
+  font-size: 13px;
 }
 </style>

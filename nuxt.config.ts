@@ -10,12 +10,7 @@ export default defineNuxtConfig({
       }),
     ],
   },
+  head: {},
   css: ["~/assets/styles/main.scss"],
-  script: [
-    {
-      src: "~/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-      mode: "client",
-    },
-  ],
   buildModules: ["@pinia/nuxt"],
 });
