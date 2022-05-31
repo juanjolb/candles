@@ -14,7 +14,8 @@ export default {
     return {
       script: [
         {
-          src: "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+          // src: "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+          src: "/_nuxt/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
         },
       ],
     };

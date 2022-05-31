@@ -13,7 +13,7 @@
       necessitatibus.
     </p>
     <div class="row donation-row">
-      <NuxtLink to="/donaciones/" class="col-md-4">
+      <NuxtLink to="/donaciones/" class="col-md-4 link">
         <div class="project project1">
           <div class="shadow-bg p-3 d-flex align-items-end">
             <div class="project-text">
@@ -28,7 +28,7 @@
           </div>
         </div>
       </NuxtLink>
-      <div class="col-md-4">
+      <div class="col-md-4 link">
         <div class="project project2">
           <div class="shadow-bg p-3 d-flex align-items-end">
             <div class="project-text">
@@ -43,7 +43,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 link">
         <div class="project project3">
           <div class="shadow-bg p-3 d-flex align-items-end">
             <div class="project-text">
@@ -70,6 +70,12 @@ import IconoirDonate from "~icons/iconoir/donate";
 .donation-text {
   font-size: 24px;
 }
+.link {
+  text-decoration: none;
+}
+.donation-row {
+  padding: 5px 0px 60px 0px;
+}
 .donation-row > .col-md-4 {
   display: flex;
 }
@@ -83,16 +89,16 @@ import IconoirDonate from "~icons/iconoir/donate";
   background: url("https://catedraldemallorca.org/wp-content/uploads/2021/09/organo_corcentante.jpg");
 }
 .project:hover {
-  -moz-transform: scale(1.05);
-  -webkit-transform: scale(1.05);
-  -o-transform: scale(1.05);
-  -ms-transform: scale(1.05);
-  -webkit-transform: scale(1.05);
-  transform: scale(1.05);
+  -moz-transform: scale(1.03);
+  -webkit-transform: scale(1.03);
+  -o-transform: scale(1.03);
+  -ms-transform: scale(1.03);
+  -webkit-transform: scale(1.03);
+  transform: scale(1.03);
 
-  -webkit-transition: transform 1.05s ease-in-out;
-  -moz-transition: transform 1.05s ease-in-out;
-  -ms-transition: transform 1.05s ease-in-out;
+  -webkit-transition: transform 0.4s ease-in-out;
+  -moz-transition: transform 0.4s ease-in-out;
+  -ms-transition: transform 0.4s ease-in-out;
 }
 .shadow-bg {
   min-height: 520px;

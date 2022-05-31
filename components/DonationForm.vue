@@ -3,7 +3,7 @@
     <h3 class="text-primary"><b>Colaborar</b></h3>
     <p class="py-2">Donar para ayudar a realizar el proyecto</p>
   </div>
-  <form>
+  <form @submit.prevent="handleSubmit" novalidate>
     <div
       class="btn-group mb-4 d-block text-center"
       role="group"
@@ -13,7 +13,7 @@
         type="radio"
         class="btn-check"
         name="btnradio"
-        v-model="quantity"
+        v-model="donation.quantity"
         value="5"
         id="btnradio1"
         autocomplete="off"
@@ -25,7 +25,7 @@
         type="radio"
         class="btn-check"
         name="btnradio"
-        v-model="quantity"
+        v-model="donation.quantity"
         value="10"
         id="btnradio2"
         autocomplete="off"
@@ -36,7 +36,7 @@
         type="radio"
         class="btn-check"
         name="btnradio"
-        v-model="quantity"
+        v-model="donation.quantity"
         value="20"
         id="btnradio3"
         autocomplete="off"
@@ -47,7 +47,7 @@
         type="radio"
         class="btn-check"
         name="btnradio"
-        v-model="quantity"
+        v-model="donation.quantity"
         value="50"
         id="btnradio4"
         autocomplete="off"
@@ -57,7 +57,7 @@
         type="radio"
         class="btn-check"
         name="btnradio"
-        v-model="quantity"
+        v-model="donation.quantity"
         value="choose"
         id="btnradio5"
         autocomplete="off"
@@ -68,34 +68,37 @@
         v-show="chooseDonation"
         style="width: 240px"
       >
-        <input type="number" class="form-control" v-model="quantityChosen" />
+        <input
+          type="number"
+          min="1"
+          max="3000"
+          class="form-control"
+          v-model="donation.quantityChosen"
+        />
         <span class="input-group-text">€</span>
       </div>
     </div>
     <div class="form-group px-3 mb-3">
       <input
-        type="email"
+        type="text"
+        v-model="donation.name"
         class="form-control"
-        id="exampleInputEmail1"
-        aria-describedby="emailHelp"
         placeholder="Nombre"
       />
     </div>
     <div class="form-group px-3 mb-3">
       <input
-        type="email"
+        type="text"
+        v-model="donation.surname"
         class="form-control"
-        id="exampleInputEmail1"
-        aria-describedby="emailHelp"
         placeholder="Apellidos"
       />
     </div>
     <div class="form-group px-3 mb-3">
       <input
-        type="email"
+        type="text"
+        v-model="donation.email"
         class="form-control"
-        id="exampleInputEmail1"
-        aria-describedby="emailHelp"
         placeholder="Email"
       />
     </div>
@@ -103,14 +106,18 @@
       <input
         class="form-check-input"
         type="checkbox"
-        value=""
+        v-model="donation.policy"
         id="defaultCheck1"
       />
       <label class="form-check-label" for="defaultCheck1">
         He leído y acepto la <a href="#">política de privacidad</a>
       </label>
     </div>
-    <button type="submit" class="btn btn-primary mx-auto d-block px-5">
+    <button
+      type="submit"
+      :disabled="disableButton"
+      class="btn btn-primary mx-auto d-block px-5"
+    >
       Realizar donación <BxsDonateHeart style="margin-top: -5px" />
     </button>
   </form>
@@ -126,13 +133,52 @@
 <script setup>
 import BxsDonateHeart from "~icons/bxs/donate-heart";
 import IcOutlineInfo from "~icons/ic/outline-info";
-const quantity = ref(5);
-const quantityChosen = ref(0);
+import { useStoreProyectos } from "~/stores/proyectos";
+import { useStoreDonaciones } from "~/stores/donaciones";
+import dayjs from "dayjs";
+//DATA
+const storeProyectos = useStoreProyectos();
+const storeDonaciones = useStoreDonaciones();
+const props = defineProps(["projectId"]);
+const id = props.projectId;
+const donation = reactive({
+  projectId: id,
+  quantity: 5,
+  quantityChosen: null,
+  name: "",
+  surname: "",
+  email: "",
+  policy: null,
+});
 
 //COMPUTED
 const chooseDonation = computed(() => {
-  return quantity.value === "choose" ? true : false;
+  return donation.quantity === "choose" ? true : false;
 });
+
+const disableButton = computed(() => {
+  if (
+    donation.name.length &&
+    donation.surname.length &&
+    donation.email.length &&
+    donation.policy === true
+  ) {
+    return false;
+  } else {
+    return true;
+  }
+});
+
+//ACTIONS
+const handleSubmit = async () => {
+  let value = donation.quantity;
+  if (value === "choose") {
+    value = donation.quantityChosen;
+  }
+  donation.fecha = dayjs().format("DD/MM/YYYY HH:mm:ss");
+  await storeProyectos.updateProjectDonation(id, value);
+  await storeDonaciones.addDonation(donation);
+};
 </script>
 
 <style lang="scss" scoped>

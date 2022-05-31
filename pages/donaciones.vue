@@ -41,10 +41,10 @@
 
 <style lang="scss" scoped>
 .donations-text {
-  padding: 80px 0px 50px 0px;
+  padding: 80px 0px 40px 0px;
 }
 .donations-text p {
-  font-size: 32px;
+  font-size: 28px;
 }
 .row.colab {
   padding: 30px 0px 100px 0px;

@@ -1,8 +1,7 @@
 <template>
-  <div class="container pt-5">
-    <h3 class="pb-5 text-center">
-      ÚLTIMAS VELAS <MdiCandle style="margin-top: -10px" />
-    </h3>
+  <div class="container pt-5 text-center">
+    <h3>ÚLTIMAS VELAS</h3>
+    <p class="py-3"><MdiCandle style="color: #bf1515; font-size: 34px" /></p>
     <div class="row">
       <div
         v-for="candle of store.candles"
