@@ -3,7 +3,7 @@
     <h3 class="text-primary"><b>Colaborar</b></h3>
     <p class="py-2">Donar para ayudar a realizar el proyecto</p>
   </div>
-  <form @submit.prevent="handleSubmit" novalidate>
+  <form @submit.prevent="handleSubmit">
     <div
       class="btn-group mb-4 d-block text-center"
       role="group"
@@ -100,6 +100,7 @@
         v-model="donation.email"
         class="form-control"
         placeholder="Email"
+        title="Three letter country code"
       />
     </div>
     <div class="form-check mx-3 mb-3">
@@ -112,6 +113,11 @@
       <label class="form-check-label" for="defaultCheck1">
         He leído y acepto la <a href="#">política de privacidad</a>
       </label>
+    </div>
+    <div :v-show="v$.$errors.length">
+      <div class="input-errors" v-for="error of v$.$errors" :key="error.$uid">
+        <div class="error-msg">{{ error.$message }}</div>
+      </div>
     </div>
     <button
       type="submit"
@@ -135,7 +141,10 @@ import BxsDonateHeart from "~icons/bxs/donate-heart";
 import IcOutlineInfo from "~icons/ic/outline-info";
 import { useStoreProyectos } from "~/stores/proyectos";
 import { useStoreDonaciones } from "~/stores/donaciones";
+import useVuelidate from "@vuelidate/core";
+import { required, email, helpers } from "@vuelidate/validators";
 import dayjs from "dayjs";
+
 //DATA
 const storeProyectos = useStoreProyectos();
 const storeDonaciones = useStoreDonaciones();
@@ -169,15 +178,38 @@ const disableButton = computed(() => {
   }
 });
 
+const validate = computed(() => ({
+  name: {
+    required,
+  },
+  surname: {
+    required,
+  },
+  policy: {
+    required,
+  },
+  email: {
+    required,
+    email: helpers.withMessage("Introduzca un mail correcto", email),
+  },
+}));
+
+const v$ = useVuelidate(validate, donation);
+
 //ACTIONS
 const handleSubmit = async () => {
-  let value = donation.quantity;
-  if (value === "choose") {
-    value = donation.quantityChosen;
-  }
-  donation.fecha = dayjs().format("DD/MM/YYYY HH:mm:ss");
-  await storeProyectos.updateProjectDonation(id, value);
-  await storeDonaciones.addDonation(donation);
+  const isValid = await v$.value.$validate();
+  console.log(v$.value);
+  // if (isValid) {
+  //   let value = donation.quantity;
+  //   if (value === "choose") {
+  //     value = donation.quantityChosen;
+  //   }
+  //   donation.fecha = dayjs().format("DD/MM/YYYY HH:mm:ss");
+  //   await storeDonaciones.addDonation(donation);
+  //   await storeProyectos.updateProjectDonation(id, value);
+  //   location.reload();
+  // }
 };
 </script>
 
@@ -199,5 +231,11 @@ const handleSubmit = async () => {
 .fiscal-info {
   padding: 20px 10px 0px 10px;
   font-size: 13px;
+}
+.input-errors {
+  padding: 0px 20px 20px 20px;
+  color: #d3172e;
+  font-weight: 500;
+  text-align: center;
 }
 </style>
