@@ -1,7 +1,7 @@
 <template>
   <div class="donation-project">
     <div class="row mt-5">
-      <div class="col-md-7 position-relative">
+      <div class="col-lg-7 position-relative">
         <div class="layer" :class="{ blocked: projectStore.project.loading }">
           <div
             v-show="projectStore.project.loading"
@@ -96,7 +96,7 @@
         </div>
       </div>
 
-      <div class="col-md-4 bg-white mx-auto py-3">
+      <div class="col-lg-4 bg-white mx-auto py-3">
         <DonationForm :projectId="projectId" />
       </div>
     </div>
@@ -159,5 +159,11 @@ onBeforeMount(async () => {
 }
 .objective {
   font-size: 22px;
+}
+@media (max-width: 1200px) {
+  .col-lg-4 {
+    margin: 20px !important;
+    flex-shrink: 1 !important;
+  }
 }
 </style>

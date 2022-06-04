@@ -26,5 +26,6 @@ export default {
 <style lang="scss">
 .body-container {
   background-color: #e8e8e8;
+  min-height: 80vh;
 }
 </style>

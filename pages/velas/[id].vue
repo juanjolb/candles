@@ -1,5 +1,5 @@
 <template>
-  <div class="background-candle">
+  <div class="background-candle d-flex align-items-center">
     <div class="container py-5">
       <h1 class="text-center text-white">Gracias por encender una vela</h1>
       <hr />

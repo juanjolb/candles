@@ -3,12 +3,13 @@
     <div class="row">
       <div class="col-side col-md-3 mb-5 text-center order-md-2">
         <div class="info-container p-3">
-          <div class="d-block py-2 my-4 block total-lit">
-            Total velas encendidas: {{ store.totalCandles }}
-          </div>
           <div class="d-block py-2 my-4 block current-lit">
             Velas iluminadas: {{ store.totalLighted }}
           </div>
+          <div class="d-block py-2 my-4 block total-lit">
+            Total velas encendidas: {{ store.totalCandles }}
+          </div>
+
           <p class="mb-3">
             <NuxtLink
               to="/encender-vela/"
