@@ -68,7 +68,7 @@
 <script setup>
 import { useStore } from "~/stores/db";
 import dayjs from "dayjs";
-import duration from "dayjs/plugin/duration";
+import duration from "dayjs/plugin/duration.js";
 import MdiClockTimeTwoOutline from "~icons/mdi/clock-time-two-outline";
 import MdiInformationOutline from "~icons/mdi/information-outline";
 dayjs.extend(duration);
