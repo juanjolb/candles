@@ -3,7 +3,7 @@
     <h3 class="text-primary"><b>Colaborar</b></h3>
     <p class="py-2">Donar para ayudar a realizar el proyecto</p>
   </div>
-  <form @submit.prevent="handleSubmit">
+  <form @submit.prevent="donate">
     <div
       class="btn-group mb-4 d-block text-center"
       role="group"
@@ -148,6 +148,7 @@ import dayjs from "dayjs";
 //DATA
 const storeProyectos = useStoreProyectos();
 const storeDonaciones = useStoreDonaciones();
+const redsys = reactive({});
 const props = defineProps(["projectId"]);
 const id = props.projectId;
 const donation = reactive({
@@ -194,22 +195,35 @@ const validate = computed(() => ({
   },
 }));
 
+const checkAmount = () => {
+  const amount = donation.quantity;
+  if (amount === "choose") {
+    amount = donation.quantityChosen;
+  }
+  return amount;
+};
+
 const v$ = useVuelidate(validate, donation);
 
+const redsysCall = async (data) => {
+  $fetch("https://sis-t.redsys.es:25443/sis/realizarPago", {
+    method: "POST",
+    redirect: "follow",
+  });
+};
+
 //ACTIONS
-const handleSubmit = async () => {
+const donate = async () => {
   const isValid = await v$.value.$validate();
-  console.log(v$.value);
-  // if (isValid) {
-  //   let value = donation.quantity;
-  //   if (value === "choose") {
-  //     value = donation.quantityChosen;
-  //   }
-  //   donation.fecha = dayjs().format("DD/MM/YYYY HH:mm:ss");
-  //   await storeDonaciones.addDonation(donation);
-  //   await storeProyectos.updateProjectDonation(id, value);
-  //   location.reload();
-  // }
+  if (isValid) {
+    try {
+      const amount = checkAmount();
+      const redsys = await $fetch("/api/redsys", { method: "POST" });
+      await redsysCall(redsys);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 };
 </script>
 
