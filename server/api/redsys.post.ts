@@ -1,11 +1,10 @@
 import { nanoid } from "nanoid"
-import crypto from "crypto"
+import cryptojs from "crypto-js"
 
  export default defineEventHandler((event)=> {
-
-     const amount = 123;
-     const merchantParameters = {
-            DS_MERCHANT_AMOUNT: amount,
+    
+     const merchParams = {
+            DS_MERCHANT_AMOUNT: "14000",
             DS_MERCHANT_CURRENCY: "978",
             DS_MERCHANT_MERCHANTCODE: "094002979",
             DS_MERCHANT_MERCHANTURL: "http://www.prueba.com/urlNotificacion.php",
@@ -17,34 +16,32 @@ import crypto from "crypto"
     }
     
     const KEY = "B62V22ZV9S5wWPz3dbomGLh9EI2dOHmw"
-    const Ds_MerchantParameters = Buffer.from(JSON.stringify(merchantParameters)).toString('base64')
     const Ds_SignatureVersion = "HMAC_SHA256_V1";
-    
-    function encrypt3DES(data, key) {
-        const md5Key = crypto.createHash('md5').update(key).digest("hex").substr(0, 24);
-        const cipher = crypto.createCipheriv('des-ede3', md5Key, '');
 
-        let encrypted = cipher.update(data, 'utf8', 'base64');
-        encrypted += cipher.final('base64');
-        return encrypted;
-  }   
+    //Base64 encoding of parameters
+    const merchantWordArray = cryptojs.enc.Utf8.parse(JSON.stringify(merchParams));
+    const merchantBase64 = merchantWordArray.toString(cryptojs.enc.Base64);
 
-    const calcSignature = (key, merchantParameters, merchant64) => {
-       // pagosonline.redsys.es/conexion-redireccion.html
-       let BASE64_KEY = Buffer.from(key).toString('base64');
-       //    console.log('base key ', BASE64_KEY);
-       let DIVERSIFIED = encrypt3DES(merchantParameters.DS_MERCHANT_ORDER, BASE64_KEY);
-       //    console.log('diversified ', DIVERSIFIED);
-       let HMAC = crypto.createHmac('sha256', merchant64).update(DIVERSIFIED).digest("base64");
-       return HMAC;
-    }
-      
-    const Ds_Signature = calcSignature(KEY, merchantParameters, Ds_MerchantParameters);
+    //Decode key
+    const keyWordArray = cryptojs.enc.Base64.parse(KEY);
 
-    return {
-        Ds_MerchantParameters: Ds_MerchantParameters,
+    //Generate transaction key
+    const iv = cryptojs.enc.Hex.parse("0000000000000000");
+    const cipher = cryptojs.TripleDES.encrypt(merchParams.DS_MERCHANT_ORDER, keyWordArray, {
+        iv:iv,
+        mode: cryptojs.mode.CBC,
+        padding: cryptojs.pad.ZeroPadding
+    });
+
+    //Sign
+    const signature = cryptojs.HmacSHA256(merchantBase64, cipher.ciphertext);
+    const signatureBase64 = signature.toString(cryptojs.enc.Base64);
+
+    return {  
+        Url: "https://sis.redsys.es/sis/realizarPago",
+        Ds_MerchantParameters: merchantBase64,
         Ds_SignatureVersion: Ds_SignatureVersion,
-        Ds_Signature: Ds_Signature
-    }
+        Ds_Signature: signatureBase64
+     }
     
 })

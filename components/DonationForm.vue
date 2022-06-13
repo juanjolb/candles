@@ -3,7 +3,12 @@
     <h3 class="text-primary"><b>Colaborar</b></h3>
     <p class="py-2">Donar para ayudar a realizar el proyecto</p>
   </div>
-  <form @submit.prevent="donate">
+  <form
+    @submit.prevent="donate"
+    method="POST"
+    :action="redsysData.Url"
+    ref="form"
+  >
     <div
       class="btn-group mb-4 d-block text-center"
       role="group"
@@ -126,6 +131,17 @@
     >
       Realizar donación <BxsDonateHeart style="margin-top: -5px" />
     </button>
+    <input
+      type="hidden"
+      name="Ds_SignatureVersion"
+      :value="redsysData.Ds_SignatureVersion"
+    />
+    <input
+      type="hidden"
+      name="Ds_MerchantParameters"
+      :value="redsysData.Ds_MerchantParameters"
+    />
+    <input type="hidden" name="Ds_Signature" :value="redsysData.Ds_Signature" />
   </form>
   <p class="fiscal-info">
     <IcOutlineInfo style="font-size: 16px; margin-top: -3px" />
@@ -148,7 +164,13 @@ import dayjs from "dayjs";
 //DATA
 const storeProyectos = useStoreProyectos();
 const storeDonaciones = useStoreDonaciones();
-const redsys = reactive({});
+const form = ref();
+let redsysData = reactive({
+  Url: null,
+  Ds_SignatureVersion: null,
+  Ds_MerchantParameters: null,
+  Ds_Signature: null,
+});
 const props = defineProps(["projectId"]);
 const id = props.projectId;
 const donation = reactive({
@@ -203,23 +225,25 @@ const checkAmount = () => {
   return amount;
 };
 
-const v$ = useVuelidate(validate, donation);
-
-const redsysCall = async (data) => {
-  $fetch("https://sis-t.redsys.es:25443/sis/realizarPago", {
-    method: "POST",
-    redirect: "follow",
-  });
+const setForm = () => {
+  form.value.Ds_Signature.value = redsysData.Ds_Signature;
+  form.value.Ds_SignatureVersion.value = redsysData.Ds_SignatureVersion;
+  form.value.Ds_MerchantParameters.value = redsysData.Ds_MerchantParameters;
+  form.value.action = redsysData.Url;
 };
+
+const v$ = useVuelidate(validate, donation);
 
 //ACTIONS
 const donate = async () => {
   const isValid = await v$.value.$validate();
   if (isValid) {
     try {
-      const amount = checkAmount();
       const redsys = await $fetch("/api/redsys", { method: "POST" });
-      await redsysCall(redsys);
+      const amount = checkAmount();
+      redsysData = redsys;
+      await setForm();
+      form.value.submit();
     } catch (e) {
       console.log(e);
     }
