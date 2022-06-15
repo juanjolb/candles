@@ -22,7 +22,32 @@
               </p>
             </div>
           </div>
-          <div class="accordion my-3" id="accordionFlushExample">
+          <div class="objective py-3">
+            <div class="row text-center">
+              <div class="col-8">
+                <div class="progress">
+                  <!-- Repair aria-valuenow -->
+                  <div
+                    class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
+                    :style="{
+                      width: projectStore.calcPorcentaje + '%',
+                    }"
+                    role="progressbar"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  >
+                    {{ projectStore.calcPorcentaje + "%" }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <p>
+                  <b>Objetivo: {{ projectStore.project.objetivo }} €</b>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="accordion" id="accordionFlushExample">
             <div class="accordion-item">
               <h2 class="accordion-header" id="flush-headingOne">
                 <button
@@ -65,32 +90,115 @@
               </div>
             </div>
           </div>
-          <div class="objective my-3">
-            <div class="row text-center">
-              <div class="col-6 border-end border-primary">
-                <p>
-                  <b>Actual: {{ projectStore.project.recaudado }} €</b>
-                </p>
-              </div>
-              <div class="col-6">
-                <p>
-                  <b>Objetivo: {{ projectStore.project.objetivo }} €</b>
-                </p>
+          <div class="row">
+            <h5 class="py-3">Últimos donantes:</h5>
+            <div class="col-md-8">
+              <div
+                id="carouselExampleControls"
+                class="carousel slide"
+                data-bs-ride="carousel"
+              >
+                <div class="carousel-inner">
+                  <div
+                    class="carousel-item"
+                    v-for="(donator, index) in projectDonations.$state
+                      .limitedDonatorsArray"
+                    :key="index"
+                    :class="{ active: isFirstElem(index) }"
+                  >
+                    <svg
+                      class="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
+                      width="800"
+                      height="40"
+                      xmlns="http://www.w3.org/2000/svg"
+                      role="img"
+                      preserveAspectRatio="xMidYMid slice"
+                      focusable="false"
+                    >
+                      <rect width="100%" height="100%" fill="#d3172e"></rect>
+                      <text x="20%" y="50%" fill="white" dy=".3em">
+                        {{ donator.data().name }} {{ donator.data().surname }}
+                      </text>
+                    </svg>
+                  </div>
+                </div>
+                <button
+                  class="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#carouselExampleControls"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    class="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button
+                  class="carousel-control-next"
+                  type="button"
+                  data-bs-target="#carouselExampleControls"
+                  data-bs-slide="next"
+                >
+                  <span
+                    class="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
               </div>
             </div>
-          </div>
-          <div class="progress">
-            <!-- Repair aria-valuenow -->
-            <div
-              class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
-              :style="{
-                width: projectStore.calcPorcentaje + '%',
-              }"
-              role="progressbar"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            >
-              {{ projectStore.calcPorcentaje + "%" }}
+            <div class="col-md-4">
+              <!-- Button trigger modal -->
+              <button
+                type="button"
+                class="btn btn-outline-primary bg-white mx-auto d-block py-2 px-4"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                @click="getAllDonators"
+              >
+                Listado de donantes
+              </button>
+
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">
+                        Listado completo de donantes
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        <div
+                          class="col-6 text-center"
+                          v-for="donator in projectDonations.$state
+                            .allDonatorsArray"
+                          :key="donator.id"
+                        >
+                          <p>
+                            {{ donator.data().name }}
+                            {{ donator.data().surname }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -105,13 +213,27 @@
 
 <script setup>
 import { useStoreProyectos } from "~/stores/proyectos";
+import { useStoreDonaciones } from "~/stores/donaciones";
 
+const projectDonations = useStoreDonaciones();
 const projectStore = useStoreProyectos();
 const projectId = "N5G4MImR2nzFDm6Tm1hw";
+
+//Actions
+const isFirstElem = (index) => {
+  return index === 0 ? true : false;
+};
+
+const getAllDonators = async () => {
+  projectDonations.$reset();
+  await projectDonations.getAllDonators(projectId);
+  await projectDonations.getLimitedDonators(projectId);
+};
 
 //Cycle
 onBeforeMount(async () => {
   await projectStore.getProjectData(projectId);
+  await projectDonations.getLimitedDonators(projectId);
 });
 </script>
 
@@ -158,7 +280,15 @@ onBeforeMount(async () => {
   );
 }
 .objective {
-  font-size: 22px;
+  font-size: 20px;
+}
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  height: 1rem;
+  width: 1rem;
+}
+.btn.btn-outline-primary:hover {
+  color: orangered;
 }
 @media (max-width: 1200px) {
   .col-lg-4 {

@@ -27,6 +27,7 @@ export const useStoreProyectos = defineStore("proyectos", {
         },
         async updateProjectDonation(id, donation) {
             try {
+                console.log(donation);
                 const docRef = doc(db, "proyectos", id );
                 const docSnap = await getDoc(docRef);
                 const value = docSnap.data().recaudado

@@ -37,7 +37,63 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useStoreDonaciones } from "~/stores/donaciones";
+import { useStoreProyectos } from "~/stores/proyectos";
+
+const route = useRoute();
+const storeDonations = useStoreDonaciones();
+const storeProjects = useStoreProyectos();
+
+//Actions
+const checkResponse = async (response, donation) => {
+  console.log(response);
+  if (response.Ds_Response <= "99" || response.Ds_Response === "0900") {
+    donation.status = "paid";
+    donation.authCode = response.Ds_AuthorisationCode;
+    donation.redsysResponse = response.Ds_Response;
+    await storeProjects.updateProjectDonation(
+      donation.projectId,
+      donation.totalAmount
+    );
+  } else {
+    donation.status = "error";
+    donation.authCode = response.Ds_AuthorisationCode;
+    donation.redsysResponse = response.Ds_Response;
+  }
+  return donation;
+};
+const decodeParams = async () => {
+  //check if is returning for redsys
+  if (route.query.Ds_MerchantParameters) {
+    try {
+      const params = route.query;
+      const response = await $fetch("/api/decode", {
+        method: "POST",
+        body: {
+          params: params,
+        },
+      });
+      const donation = await storeDonations.getDonation(response.Ds_Order);
+      const donationData = donation.data();
+      if (donationData.status === "pending") {
+        const donationId = donation.id;
+        const newData = await checkResponse(response, donationData);
+        await storeDonations.updatePaymentDonation(donationId, newData);
+        storeDonations.$reset();
+      } else {
+        console.log("already updated");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+};
+
+onBeforeMount(() => {
+  decodeParams();
+});
+</script>
 
 <style lang="scss" scoped>
 .donations-text {

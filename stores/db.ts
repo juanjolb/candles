@@ -42,6 +42,7 @@ export const useStore = defineStore("db", {
     //GET CANDLES INDEX
     async getCandlesIndex() {
       try {
+        const donations = collection(db, "donaciones");
         const q = query(
           collection(db, "velas"),
           orderBy("fecha", "desc"),

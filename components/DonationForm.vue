@@ -112,10 +112,21 @@
       <input
         class="form-check-input"
         type="checkbox"
-        v-model="donation.policy"
+        v-model="donation.anonymous"
         id="defaultCheck1"
       />
       <label class="form-check-label" for="defaultCheck1">
+        Deseo realizar mi donación de manera anónima.
+      </label>
+    </div>
+    <div class="form-check mx-3 mb-3">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        v-model="donation.policy"
+        id="defaultcheck2"
+      />
+      <label class="form-check-label" for="defaultcheck2">
         He leído y acepto la <a href="#">política de privacidad</a>
       </label>
     </div>
@@ -163,7 +174,6 @@ import dayjs from "dayjs";
 
 //DATA
 const storeProyectos = useStoreProyectos();
-const storeDonaciones = useStoreDonaciones();
 const form = ref();
 let redsysData = reactive({
   Url: null,
@@ -180,7 +190,10 @@ const donation = reactive({
   name: "",
   surname: "",
   email: "",
+  date: dayjs().unix(),
+  anonymous: false,
   policy: null,
+  status: "pending",
 });
 
 //COMPUTED
@@ -217,8 +230,9 @@ const validate = computed(() => ({
   },
 }));
 
+//ACTIONS
 const checkAmount = () => {
-  const amount = donation.quantity;
+  let amount = donation.quantity;
   if (amount === "choose") {
     amount = donation.quantityChosen;
   }
@@ -234,13 +248,18 @@ const setForm = () => {
 
 const v$ = useVuelidate(validate, donation);
 
-//ACTIONS
 const donate = async () => {
   const isValid = await v$.value.$validate();
   if (isValid) {
     try {
-      const redsys = await $fetch("/api/redsys", { method: "POST" });
       const amount = checkAmount();
+      const redsys = await $fetch("/api/redsys", {
+        method: "POST",
+        body: {
+          amount: amount,
+          donation: donation,
+        },
+      });
       redsysData = redsys;
       await setForm();
       form.value.submit();
