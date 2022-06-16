@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     const pinia = createPinia()
     const store = useStoreDonaciones(pinia);
     const body = await useBody(event);
-
+      
     const merchParams = {
         DS_MERCHANT_AMOUNT: body.amount * 100,
         DS_MERCHANT_CURRENCY: "978",
@@ -32,16 +32,12 @@ export default defineEventHandler(async (event) => {
         console.log(e);
     }
      
-    // const KEY = "B62V22ZV9S5wWPz3dbomGLh9EI2dOHmw"
-    const KEY = "sq7HjrUOBfKmC576ILgskD5srU870gJ7"
-    const Ds_SignatureVersion = "HMAC_SHA256_V1";
-
     //Base64 encoding of parameters
     const merchantWordArray = cryptojs.enc.Utf8.parse(JSON.stringify(merchParams));
     const merchantBase64 = merchantWordArray.toString(cryptojs.enc.Base64);
 
     //Decode key
-    const keyWordArray = cryptojs.enc.Base64.parse(KEY);
+    const keyWordArray = cryptojs.enc.Base64.parse(useRuntimeConfig().redsysKeyTest);
 
     //Generate transaction key
     const iv = cryptojs.enc.Hex.parse("0000000000000000");
@@ -58,7 +54,7 @@ export default defineEventHandler(async (event) => {
     return {
         Url: "https://sis-t.redsys.es:25443/sis/realizarPago",
         Ds_MerchantParameters: merchantBase64,
-        Ds_SignatureVersion: Ds_SignatureVersion,
+        Ds_SignatureVersion: useRuntimeConfig().signatureKey,
         Ds_Signature: signatureBase64
     }
 })

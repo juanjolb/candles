@@ -46,12 +46,15 @@ export const useStoreDonaciones = defineStore("donaciones", {
                 const q = query(
                     donations, 
                     where("projectId", "==", projectId),
+                    where("anonymous", "==", false),
+                    where("status", "==", "paid"),
                     orderBy("date", "desc"),
                     limit(5)
                 )
                 const querySnapshot = await getDocs(q);
                 querySnapshot.forEach((doc) => {
-                     if ( doc.data().anonymous !== true ) { this.limitedDonatorsArray.push(doc) }
+                    console.log(doc);
+                    this.limitedDonatorsArray.push(doc) 
                 })
             }
             catch (e){
@@ -64,11 +67,13 @@ export const useStoreDonaciones = defineStore("donaciones", {
                 const q = query(
                     donations, 
                     where("projectId", "==", projectId),
+                    where("anonymous", "==", false),
+                    where("status", "==", "paid"),
                     orderBy("date", "desc"),
                 )
                 const querySnapshot = await getDocs(q);
                 querySnapshot.forEach((doc) => {
-                    if ( doc.data().anonymous !== true ) { this.allDonatorsArray.push(doc) }
+                    this.allDonatorsArray.push(doc) 
                 })
             }
             catch (e){

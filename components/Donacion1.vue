@@ -238,6 +238,9 @@ onBeforeMount(async () => {
 </script>
 
 <style lang="scss" scoped>
+text {
+  font-weight: bold;
+}
 .progress {
   background-color: white;
   height: 32px;

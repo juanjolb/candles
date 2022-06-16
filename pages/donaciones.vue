@@ -47,15 +47,19 @@ const storeProjects = useStoreProyectos();
 
 //Actions
 const checkResponse = async (response, donation) => {
-  console.log(response);
-  if (response.Ds_Response <= "99" || response.Ds_Response === "0900") {
+  const redsysResCode = parseInt(response.Ds_Response);
+  if (redsysResCode <= 99 || redsysResCode == 900) {
     donation.status = "paid";
     donation.authCode = response.Ds_AuthorisationCode;
     donation.redsysResponse = response.Ds_Response;
+    storeDonations.$reset();
+    storeProjects.$reset();
     await storeProjects.updateProjectDonation(
       donation.projectId,
       donation.totalAmount
     );
+    await storeProjects.getProjectData(donation.projectId);
+    await storeDonations.getLimitedDonators(donation.projectId);
   } else {
     donation.status = "error";
     donation.authCode = response.Ds_AuthorisationCode;
@@ -80,7 +84,6 @@ const decodeParams = async () => {
         const donationId = donation.id;
         const newData = await checkResponse(response, donationData);
         await storeDonations.updatePaymentDonation(donationId, newData);
-        storeDonations.$reset();
       } else {
         console.log("already updated");
       }
