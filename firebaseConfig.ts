@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBaKzxKKPe0KDD_AmLSSBxtUKy0NybZ8lA",
+  apiKey: useRuntimeConfig().firebaseKey,
   authDomain: "velas-catedral-de-mallorca.firebaseapp.com",
   projectId: "velas-catedral-de-mallorca",
   storageBucket: "velas-catedral-de-mallorca.appspot.com",
